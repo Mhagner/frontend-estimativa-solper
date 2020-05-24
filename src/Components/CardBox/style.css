@@ -1,0 +1,34 @@
+.card-box {
+    width: 270px;
+    height: 120px;
+    margin-left: 16px;
+    padding-left: 18px;
+    border-radius: 8px;
+}
+
+.title-number {
+    width: 58px;
+    height: 25px;
+    margin-top: 30px;
+    font-size: 50px;
+    font-weight: bold;
+    line-height: 0.5;
+    letter-spacing: normal;
+    color: white;
+}
+
+.description {
+    width: 183px;
+    height: 28px;
+    margin-top: 20px;
+    font-size: 18px;
+    font-style: normal;
+    line-height: 2;
+    letter-spacing: normal;
+    color: white;
+}
+
+.uilarrows-right-down {
+    width: 104px;
+    height: 119px;
+}
