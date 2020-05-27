@@ -1,13 +1,18 @@
 import React from 'react'
-import './style.css'
-
+import * as S from './styled'
 
 function CardBox(props) {
     return (
-        <div className="card-box" style={{ backgroundColor: props.color }}>
-            <p className="title-number">{props.titleNumber}</p>
-            <p className="description">{props.description}</p>
-        </div>
+        <S.CardContainer 
+            style={{ 
+                backgroundColor: props.color, 
+                backgroundImage: `url(${props.image})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'bottom right',
+            }}>
+            <S.CardTitle>{props.titleNumber}</S.CardTitle>
+            <S.CardDescription>{props.description}</S.CardDescription>
+        </S.CardContainer>
     )
 }
 

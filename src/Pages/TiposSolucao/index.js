@@ -2,11 +2,11 @@ import React from 'react'
 
 import Main from '../../Components/Main'
 
-function Estimativas(){
+function TiposSolucao(){
     return(
-        <Main titlePage="Estimativas Realizadas">
+        <Main titlePage="Tipos de Solução">
         </Main>
     )
 }
 
-export default Estimativas
+export default TiposSolucao
