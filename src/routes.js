@@ -5,8 +5,8 @@ import Home from './Pages/Home'
 import NovaEstimativa from './Pages/NovaEstimativa'
 import Estimativas from './Pages/Estimativas'
 import TiposSolucao from './Pages/TiposSolucao'
-import BancoConhecimento from './Pages/BancoConhecimento'
-import Contato from './Pages/Contato'
+import BaseConhecimento from './Pages/BaseConhecimento'
+import Parametrizacoes from './Pages/Parametrizacoes'
 
 function Routes() {
   return (
@@ -16,8 +16,8 @@ function Routes() {
         <Route path="/nova-estimativa" component={NovaEstimativa} />  
         <Route path="/estimativas" component={Estimativas} />  
         <Route path="/tipos-solucao" component={TiposSolucao} />  
-        <Route path="/banco-conhecimento" component={BancoConhecimento} />  
-        <Route path="/contato" component={Contato}/>
+        <Route path="/base-conhecimento" component={BaseConhecimento} />  
+        <Route path="/parametrizacoes" component={Parametrizacoes}/>
       </Switch>
     </BrowserRouter>
   )

@@ -2,12 +2,11 @@ import React from 'react'
 
 import Main from '../../Components/Main'
 
-function BancoConhecimento(){
+function BaseConhecimento(){
     return(
         <Main titlePage="Base de Conhecimento">
-            <h2>Hello world</h2>
         </Main>
     )
 }
 
-export default BancoConhecimento
+export default BaseConhecimento
