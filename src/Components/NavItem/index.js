@@ -5,7 +5,8 @@ function NavItem(props) {
 	return (
 		<>
 			<li className="nav-item">
-				<Link className={`nav-link ${(props.active) ? 'active' : ''}`} to={`${props.url}`}>
+				<Link className={`nav-link ${(props.active) ? 'active' : ''}`} to={`${props.url}`} 
+					target={(props.target)? "_blank":''}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						xlink="http://www.w3.org/1999/xlink"

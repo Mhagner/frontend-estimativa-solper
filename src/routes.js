@@ -12,12 +12,16 @@ function Routes() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Home} /> 
-        <Route path="/nova-estimativa" component={NovaEstimativa} />  
-        <Route path="/estimativas" component={Estimativas} />  
-        <Route path="/tipos-solucao" component={TiposSolucao} />  
-        <Route path="/base-conhecimento" component={BaseConhecimento} />  
-        <Route path="/parametrizacoes" component={Parametrizacoes}/>
+        <Route exact path="/" component={Home} />
+        <Route path="/nova-estimativa" component={NovaEstimativa} />
+        <Route path="/estimativas" component={Estimativas} />
+        <Route path="/tipos-solucao" component={TiposSolucao} />
+        <Route path="/base-conhecimento" component={BaseConhecimento} />
+        <Route path="/escopo-office-online" component={() => {
+          window.location.href = 'https://www.office.com/launch/word?auth=2'
+          return null
+        }} />
+        <Route path="/parametrizacoes" component={Parametrizacoes} />
       </Switch>
     </BrowserRouter>
   )

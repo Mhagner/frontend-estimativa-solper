@@ -32,6 +32,13 @@ function Main(props) {
                             path_2="M3 6h18"
                             path_3="M3 18h18"
                         />
+                        <NavItem
+                            description="Novo Escopo"
+                            url="/escopo-office-online"
+                            target
+                            path_1="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                            path_2="M14 2v6h6"
+                        />
                         <DivSidebar description="Cadastros Basicos" />
                         <NavItem
                             description="Tipos de Solução"
@@ -55,7 +62,7 @@ function Main(props) {
                         <DivSidebar description="OUTROS" />
                         <NavItem
                             description="Usuários"
-                            url="/"
+                            url="/escopo-office-online"
                             path_1="M23 21v-2a4 4 0 0 0-3-3.87"
                             path_2="M16 3.13a4 4 0 0 1 0 7.75"
                             path_3="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
