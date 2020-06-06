@@ -8603,6 +8603,11 @@ react-bootstrap-table2-editor@^1.4.0:
   resolved "https://registry.yarnpkg.com/react-bootstrap-table2-editor/-/react-bootstrap-table2-editor-1.4.0.tgz#2d73de4a88d23865e966aeb164abf78d71b17e60"
   integrity sha512-18yDCwsVt3b5Fwy0jidNDAbUA6vC7k9JjQVmykazWSw8G115+mmZnhe9/7RO7jAu8X7lhmobwlNwECzwPu1nDg==
 
+react-bootstrap-table2-paginator@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-bootstrap-table2-paginator/-/react-bootstrap-table2-paginator-2.1.2.tgz#a62151909e594719db568cede6e5d2962cbf8ddb"
+  integrity sha512-LC5znEphhgKJvaSY1q8d+Gj0Nc/1X+VS3tKJjkmWmfv9P61YC/BnwJ+aoqEmQzsLiVGowrzss+i/u+Tip5H+Iw==
+
 react-dev-utils@^10.2.1:
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-10.2.1.tgz#f6de325ae25fa4d546d09df4bb1befdc6dd19c19"

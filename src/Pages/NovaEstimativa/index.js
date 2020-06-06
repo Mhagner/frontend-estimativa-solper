@@ -7,7 +7,10 @@ import MultForm from '../../Components/Forms/MultForm'
 const Estimativa = () => {
     return (
         <Main titlePage="Nova Estimativa">
-            <MultForm />
+            <MultForm 
+                buttonPrevious="info"
+                buttonNext="success"
+            />
         </Main>
     )
 }
