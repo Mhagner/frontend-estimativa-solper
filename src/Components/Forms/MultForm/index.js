@@ -20,7 +20,8 @@ const defaultData = {
     responsibleEstimate: "",
     date: "",
     client: "",
-    opportunityNumber: ""
+    opportunityNumber: "",
+    hoursLeader: 0
 };
 
 

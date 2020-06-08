@@ -1,7 +1,11 @@
 import React from "react";
 
+import CardForm from '../../CardForm'
+import ButtonStep from '../../ButtonStep'
+import ItemForm from "../../ItemForm";
+
 const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, buttonNext }) => {
-    const { } = formData;
+    const { hoursLeader } = formData;
 
     const { previous, next } = navigation;
 
@@ -9,19 +13,78 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
         <div className="form">
             <div className="row">
                 <div className="col-md-12 order-md-1">
-                    <h5 class="pb-10 text-info">
-                        Demais estimativas do projeto
-                    </h5>
-                    <div className="col-md-12 mb-3">
-
-                    </div>
-                    <div className="row">
-                        <div className="btn-group col-md-12 mb-3">
-                            <button className={`btn btn-${buttonPrevious}`} onClick={previous}>Voltar</button>
-                            <button className={`btn btn-${buttonNext}`} onClick={next}>Próximo</button>
-                        </div>
-                    </div>
-
+                    <CardForm titleCard="Dados das Demais Estimativas">
+                        <form className="needs-validation">
+                            <div className="row">
+                                <div className="col-md-2 mb-3">
+                                    <ItemForm
+                                        label="Horas de Líder"
+                                        name="hoursLeader"
+                                        type="text"
+                                        value={hoursLeader}
+                                        onChange={setForm}
+                                    />
+                                </div>
+                                <div className="col-md-2 mb-3">
+                                    <ItemForm
+                                        label="Horas Reuniões Líder"
+                                        name="hoursLeader"
+                                        type="text"
+                                        value={hoursLeader}
+                                        onChange={setForm}
+                                    />
+                                </div>
+                                <div className="col-md-2 mb-3">
+                                    <ItemForm
+                                        label="Horas Reuniões Time"
+                                        name="hoursLeader"
+                                        type="text"
+                                        value={hoursLeader}
+                                        onChange={setForm}
+                                    />
+                                </div>
+                                <div className="col-md-2 mb-3">
+                                    <ItemForm
+                                        label="Horas Apropriação"
+                                        name="hoursLeader"
+                                        type="text"
+                                        value={hoursLeader}
+                                        onChange={setForm}
+                                    />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-md-2 mb-3">
+                                    <ItemForm
+                                        label="Horas GCS Setup"
+                                        name="hoursLeader"
+                                        type="text"
+                                        value={hoursLeader}
+                                        onChange={setForm}
+                                    />
+                                </div>
+                                <div className="col-md-2 mb-3">
+                                    <ItemForm
+                                        label="Prep. de ambiente"
+                                        name="hoursLeader"
+                                        type="text"
+                                        value={hoursLeader}
+                                        onChange={setForm}
+                                    />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <ButtonStep
+                                    colorPrevious={buttonPrevious}
+                                    colorNext={buttonNext}
+                                    funcPrevious={previous}
+                                    funcNext={next}
+                                    buttonPrevious="Voltar"
+                                    buttonNext="Próximo"
+                                />
+                            </div>
+                        </form>
+                    </CardForm>
                 </div>
             </div >
         </div >
