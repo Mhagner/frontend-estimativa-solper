@@ -3647,6 +3647,11 @@ detect-port-alt@1.1.6:
     address "^1.0.1"
     debug "^2.6.0"
 
+dhtmlx-gantt@^7.0.4:
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/dhtmlx-gantt/-/dhtmlx-gantt-7.0.4.tgz#8a117fec961e1573abc7358ff69eea59a9154b9e"
+  integrity sha512-N3WmSQd5W+qzUAvQZYFyDQU96HLwDMtYdsNdVAD4NhNtOUoW7piqjMnz5P2EfVBOIu8NvirtDm3w4ckU/kzILg==
+
 diff-sequences@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-24.9.0.tgz#5715d6244e2aa65f48bba0bc972db0b0b11e95b5"

@@ -68,7 +68,7 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="btn-group col-md-12 mb-3">
+                                <div className="btn-group col-md-12 mb-1">
                                     <button 
                                         className={`btn btn-${buttonNext}`} 
                                         onClick={next}>Próximo

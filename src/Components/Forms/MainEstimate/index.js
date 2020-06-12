@@ -4,6 +4,7 @@ import TableEdite from '../../TableEdite'
 import CardForm from '../../CardForm'
 import CardResume from '../../CardResume'
 import ButtonStep from '../../ButtonStep'
+import Card from '../../Card'
 
 const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNext }) => {
     const { totalRequisito } = formData;
@@ -17,48 +18,36 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         <div className="form">
             <div className="row">
                 <div className="col-md-12 order-md-1">
-                    <CardForm titleCard="Dados da Estimativa Princial">
+                    <CardForm titleCard="Estimativa Principal">
                         <TableEdite />
                         <div className="row">
                             <div className="col-md-3 mb-3">
-                                <CardResume
-                                    titleHeader="Requisito"
-                                    value={20}
-                                    widthCard={widthCard}
-                                    heightCard={heightCard}
-                                    color="secondary"
+                                <Card
+                                    title="Requisito"
+                                    description={20}
                                 />
                             </div>
                             <div className="col-md-3 mb-3">
-                                <CardResume
-                                    titleHeader="Desenvolvimento"
-                                    value={20}
-                                    widthCard={widthCard}
-                                    heightCard={heightCard}
-                                    color="secondary"
+                                <Card
+                                    title="Desenvolvimento"
+                                    description={20}
                                 />
                             </div>
                             <div className="col-md-3 mb-3">
-                                <CardResume
-                                    titleHeader="Testes"
-                                    value={20}
-                                    widthCard={widthCard}
-                                    heightCard={heightCard}
-                                    color="secondary"
+                                <Card
+                                    title="Testes"
+                                    description={20}
                                 />
                             </div>
                             <div className="col-md-3 mb-3">
-                                <CardResume
-                                    titleHeader="Total"
-                                    value={20}
-                                    widthCard={widthCard}
-                                    heightCard={heightCard}
-                                    color="primary"
+                                <Card
+                                    title="Total"
+                                    description={20}
                                 />
                             </div>
                         </div>
                         <div className="row">
-                            <ButtonStep 
+                            <ButtonStep
                                 colorPrevious={buttonPrevious}
                                 colorNext={buttonNext}
                                 funcPrevious={previous}
