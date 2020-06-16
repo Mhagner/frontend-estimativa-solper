@@ -3,14 +3,14 @@ import React from "react";
 import ItemForm from "../../ItemForm";
 import Combobox from "../../Combobox"
 import CardForm from '../../CardForm'
-import ButtonStep from '../../ButtonStep'
 
 const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
     const {
-        responsibleEscope,
-        responsibleEstimate,
-        date,
-        opportunityNumber
+        responsavelEscopo,
+        responsavelEstimativa,
+        data,
+        numeroDaOportunidade,
+        cliente
     } = formData;
 
     const { next } = navigation;
@@ -19,15 +19,16 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
         <div className="form">
             <div className="row">
                 <div className="col-md-12 order-md-1">
-                    <CardForm titleCard="Dados da Oportunidade">
+                    <CardForm titleCard={`Dados da Oportunidade - OPP: ${numeroDaOportunidade} - ${cliente}`}>
                         <form className="needs-validation">
                             <div className="row">
                                 <div className="col-md-4 mb-3">
                                     <ItemForm
+                                        required
                                         label="Data"
-                                        name="date"
-                                        type="date"
-                                        value={date}
+                                        name="data"
+                                        type="text"
+                                        value={data}
                                         onChange={setForm}
                                     />
                                 </div>
@@ -35,14 +36,19 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
                                     <ItemForm
                                         label="Oportunidade"
                                         placeholder="Digite o número"
-                                        name="opportunityNumber"
+                                        name="numeroDaOportunidade"
                                         type="text"
-                                        value={opportunityNumber}
+                                        value={numeroDaOportunidade}
                                         onChange={setForm}
                                     />
                                 </div>
                                 <div className="col-md-4 mb-3">
-                                    <Combobox label="Cliente"
+                                    <Combobox
+                                        label="Cliente"
+                                        name="cliente"
+                                        value={cliente}
+                                        onChange={setForm}
+
                                     />
                                 </div>
                             </div>
@@ -52,8 +58,8 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
                                     <ItemForm
                                         label="Responsável pelo escopo"
                                         placeholder="Digite o nome"
-                                        name="resposibleEscopo"
-                                        value={responsibleEscope}
+                                        name="responsavelEscopo"
+                                        value={responsavelEscopo}
                                         onChange={setForm}
                                     />
                                 </div>
@@ -61,17 +67,18 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
                                     <ItemForm
                                         label="Responsável pela estimativa"
                                         placeholder="Digite o nome"
-                                        name="resposibleEstimate"
-                                        value={responsibleEstimate}
+                                        name="responsavelEstimativa"
+                                        value={responsavelEstimativa}
                                         onChange={setForm}
                                     />
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="btn-group col-md-12 mb-1">
-                                    <button 
-                                        className={`btn btn-${buttonNext}`} 
-                                        onClick={next}>Próximo
+                                    <button
+                                        className={`btn btn-${buttonNext}`}
+                                        onClick={next}>
+                                        Próximo
                                     </button>
                                 </div>
                             </div>

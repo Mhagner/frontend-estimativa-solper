@@ -3,11 +3,24 @@ import React from "react";
 import CardForm from '../../CardForm'
 import ButtonStep from '../../ButtonStep'
 import ItemForm from "../../ItemForm";
-import TableResume from '../../TableResume'
 import Card from '../../Card'
+import { defaultData } from "../../TableEdite/data";
 
 const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, buttonNext }) => {
-    const { hoursLeader } = formData;
+    const { 
+        horasLider,
+        reuniaoLider,
+        apropriacaoTime,
+        reunioesDiaria,
+        gcs,
+        preparacaoAmbiente,
+        elaboracaoEscopo,
+        homologacao,
+        posGoLive,
+        treinamento,
+        numeroDaOportunidade,
+        cliente
+    } = formData;
 
     const { previous, next } = navigation;
 
@@ -15,7 +28,7 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
         <div className="form">
             <div className="row">
                 <div className="col-md-12 order-md-1">
-                    <CardForm titleCard="Dados das Demais Estimativas">
+                    <CardForm titleCard={`Dados das Demais Estimativas - OPP: ${numeroDaOportunidade} - ${cliente}`}>
                         <form className="needs-validation">
                             <div className="row">
                                 <div className="col-md-6 mb-3">
@@ -24,27 +37,27 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                             <div className="col-md-4 mb-1">
                                                 <ItemForm
                                                     label="GP Líder"
-                                                    name="hoursLeader"
+                                                    name="horasLider"
                                                     type="text"
-                                                    value={hoursLeader}
+                                                    value={horasLider}
                                                     onChange={setForm}
                                                 />
                                             </div>
                                             <div className="col-md-4 mb-1">
                                                 <ItemForm
                                                     label="Reuniões Líder"
-                                                    name="hoursLeader"
+                                                    name="reuniaoLider"
                                                     type="text"
-                                                    value={hoursLeader}
+                                                    value={reuniaoLider}
                                                     onChange={setForm}
                                                 />
                                             </div>
                                             <div className="col-md-4 mb-1">
                                                 <ItemForm
                                                     label="Apropriação time"
-                                                    name="hoursLeader"
+                                                    name="apropriacaoTime"
                                                     type="text"
-                                                    value={hoursLeader}
+                                                    value={apropriacaoTime}
                                                     onChange={setForm}
                                                 />
                                             </div>
@@ -53,9 +66,9 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                             <div className="col-md-4 mb-1">
                                                 <ItemForm
                                                     label="Reuniões diária"
-                                                    name="hoursLeader"
+                                                    name="reunioesDiaria"
                                                     type="text"
-                                                    value={hoursLeader}
+                                                    value={reunioesDiaria}
                                                     onChange={setForm}
                                                 />
                                             </div>
@@ -68,27 +81,27 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                             <div className="col-md-4 mb-1">
                                                 <ItemForm
                                                     label="GCS/Setup"
-                                                    name="hoursLeader"
+                                                    name="gcs"
                                                     type="text"
-                                                    value={hoursLeader}
+                                                    value={gcs}
                                                     onChange={setForm}
                                                 />
                                             </div>
                                             <div className="col-md-4 mb-1">
                                                 <ItemForm
                                                     label="Prep. de ambiente"
-                                                    name="hoursLeader"
+                                                    name="preparacaoAmbiente"
                                                     type="text"
-                                                    value={hoursLeader}
+                                                    value={preparacaoAmbiente}
                                                     onChange={setForm}
                                                 />
                                             </div>
                                             <div className="col-md-4 mb-1">
                                                 <ItemForm
                                                     label="Elab. do escopo"
-                                                    name="hoursLeader"
+                                                    name="elaboracaoEscopo"
                                                     type="text"
-                                                    value={hoursLeader}
+                                                    value={elaboracaoEscopo}
                                                     onChange={setForm}
                                                 />
                                             </div>
@@ -102,27 +115,27 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                             <div className="col-md-4 mb-1">
                                                 <ItemForm
                                                     label="Homol./produção"
-                                                    name="hoursLeader"
+                                                    name="homologacao"
                                                     type="text"
-                                                    value={hoursLeader}
+                                                    value={homologacao}
                                                     onChange={setForm}
                                                 />
                                             </div>
                                             <div className="col-md-4 mb-1">
                                                 <ItemForm
                                                     label="Pós GO-live"
-                                                    name="hoursLeader"
+                                                    name="posGoLive"
                                                     type="text"
-                                                    value={hoursLeader}
+                                                    value={posGoLive}
                                                     onChange={setForm}
                                                 />
                                             </div>
                                             <div className="col-md-4 mb-1">
                                                 <ItemForm
-                                                    label="Treinamento"
+                                                    label="treinamento"
                                                     name="hoursLeader"
                                                     type="text"
-                                                    value={hoursLeader}
+                                                    value={treinamento}
                                                     onChange={setForm}
                                                 />
                                             </div>

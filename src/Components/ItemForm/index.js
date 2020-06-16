@@ -4,7 +4,7 @@ const ItemForm = ({ label, children, type = "text", placeholder, ...outherProps 
     <div className="form-group">
         <>
             <label for="formGroupExampleInput">{label}</label>
-            <input type={type} className="form-control" placeholder={placeholder} />
+            <input type={type} {...outherProps} className="form-control" placeholder={placeholder} />
         </>
     </div>
 )

@@ -1,51 +1,39 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import BootstrapTable from 'react-bootstrap-table-next'
 import cellEditFactory from 'react-bootstrap-table2-editor'
 import paginationFactory from 'react-bootstrap-table2-paginator';
 
-import {columns, data, options} from './data'
+const TableEdite = (props) => {
 
-const TableEdite = () => {
-
-    let history = useHistory();
-
-    function addNewRow() {
-        const newRow = {
-            id: data.length + 1,
-            descricao: "",
-            tipo: "",
-            requisito: 0,
-            desenvolvimento: 0,
-            testes: 0,
-            total: 0
-        }
-        data.push(newRow);
-        history.push('/nova-estimativa')
+    function load(dados, item) {
+        const req = dados.map(req => (
+            req[item]
+        ))
+        const sumDado = req.reduce((acc, item) => acc + item, 0)
+        return sumDado
     }
 
     return (
         <>
-            <div className="btn-group mb-3">
-                <button className="btn btn-primary" onClick={() => addNewRow()}>Nova linha</button>
-            </div>
             <div className="col-md-12 mb-3">
                 <BootstrapTable
                     keyField="id"
                     bootstrap4
-                    data={data}
-                    columns={columns}
-                    headerWrapperClasses="foo"
+                    data={props.defaultData}
+                    columns={props.columns}
                     hover
                     striped
-                    pagination={paginationFactory(options)}
+                    pagination={paginationFactory(props.options)}
                     cellEdit={cellEditFactory({
                         mode: 'click',
-                        blurToSave: true
+                        blurToSave: true,
+                        afterSaveCell:
+                            (oldValue, newValue, row, column) => {
+                                props.setRequisito(load(props.dados, props.type))
+                            }
                     })}
                 />
             </div>
-
         </>
     )
 }

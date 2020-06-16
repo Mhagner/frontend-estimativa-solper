@@ -51,21 +51,24 @@ export const columns = [{
     headerStyle: () => {
         return { width: "10%" };
     },
-    align: "center"
+    align: "center",
+    type: 'number'
 }, {
     dataField: 'desenvolvimento',
     text: 'DESENV.',
     headerStyle: () => {
         return { width: "10%" };
     },
-    align: "center"
+    align: "center",
+    type: 'number'
 }, {
     dataField: 'testes',
     text: 'TESTES',
     headerStyle: () => {
         return { width: "10%" };
     },
-    align: "center"
+    align: "center",
+    type: 'number'
 }, {
     dataField: 'total',
     text: 'TOTAL',
@@ -73,7 +76,8 @@ export const columns = [{
     headerStyle: () => {
         return { width: "10%" };
     },
-    align: "center"
+    align: "center",
+    type: 'number'
 }];
 
 
@@ -90,23 +94,4 @@ export const options = {
     }]
 }
 
-export const data = [
-    {
-        id: 1,
-        descricao: "",
-        tipo: "",
-        requisito: 0,
-        desenvolvimento: 0,
-        testes: 0,
-        total: 0
-    },
-    {
-        id: 2,
-        descricao: "",
-        tipo: "",
-        requisito: 0,
-        desenvolvimento: 0,
-        testes: 0,
-        total: 0
-    }
-]
+export const defaultData = []

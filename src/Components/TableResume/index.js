@@ -1,25 +1,23 @@
-import React from 'react'
+ import React from 'react'
 import BootstrapTable from 'react-bootstrap-table-next'
 import cellEditFactory from 'react-bootstrap-table2-editor'
 
-import { columns, data } from './data'
+import { columns, dados } from './data'
 
-const TableResume = () => {
+const TableResume = ({requisito}) => {
+
+    dados[0].horas = requisito
 
     return (
         <>
             <BootstrapTable
                 keyField="id"
                 bootstrap4
-                data={data}
+                data={dados}
                 columns={columns}
                 headerWrapperClasses="foo"
                 hover
                 striped
-                cellEdit={cellEditFactory({
-                    mode: 'click',
-                    blurToSave: true
-                })}
             />
         </>
     )

@@ -18,13 +18,13 @@ export const columns = [{
     align: "center",
     editable: false,
     footerAlign: 'center',
-    footer: columnData => columnData.reduce((acc, item) => acc + item, 0)
+    footer: dados => dados.reduce((acc, item) => acc + item, 0)
 }];
 
-export const data = [
+export const dados = [
     {
         atividades: 'Especificação técnica',
-        horas: 0
+        horas: 2
     },
     {
         atividades: 'Implementação e testes',
@@ -36,6 +36,10 @@ export const data = [
     },
     {
         atividades: 'Acompanhamento pós GO-live',
+        horas: 0
+    },
+    {
+        atividades: 'Treinamento',
         horas: 0
     },
     {

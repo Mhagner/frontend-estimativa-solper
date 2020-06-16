@@ -6,7 +6,7 @@ import CardForm from '../../CardForm'
 import Card from '../../Card'
 
 const Overview = ({ setForm, formData, navigation, buttonPrevious, buttonNext }) => {
-    const { } = formData;
+    const { numeroDaOportunidade, requisito, cliente } = formData;
 
     const { previous, next } = navigation;
 
@@ -14,11 +14,11 @@ const Overview = ({ setForm, formData, navigation, buttonPrevious, buttonNext })
         <div className="form">
             <div className="row">
                 <div className="col-md-12 order-md-1">
-                    <CardForm titleCard="Resumo da estimativa">
+                    <CardForm titleCard={`Resumo da estimativa - OPP: ${numeroDaOportunidade} - ${cliente}`}>
                         <form className="needs-validation">
                             <div className="row">
                                 <div className="col-md-6 mb-3">
-                                    <TableResume />
+                                    <TableResume requisito={requisito} />
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <Card>
@@ -33,6 +33,9 @@ const Overview = ({ setForm, formData, navigation, buttonPrevious, buttonNext })
                                         <div className="row">
                                             <div className="col-md-6 mb-4">
                                                 <button type="button" className="btn btn-secondary btn-block">Macro cronograma</button>
+                                            </div>
+                                            <div className="col-md-6 mb-4">
+                                                <button type="button" className="btn btn-danger btn-block">Resumo por item</button>
                                             </div>
                                         </div>
                                     </Card>

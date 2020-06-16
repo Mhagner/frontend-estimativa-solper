@@ -5,27 +5,10 @@ import EscopeInformation from '../EscopeInformation'
 import MainEstimate from '../MainEstimate'
 import OutherEstimates from '../OutherEstimates'
 import Overview from '../Overview'
-import Submit from '../Submit'
+import Mainternance from '../Mainternance'
+import { defaultData, steps } from './data'
 
-const steps = [
-    { id: "escope" },
-    { id: "estimate" },
-    { id: "outher" },
-    { id: "overview" },
-    { id: "submit" }
-];
-
-const defaultData = {
-    responsibleEscope: "",
-    responsibleEstimate: "",
-    date: "",
-    client: "",
-    opportunityNumber: "",
-    hoursLeader: 0
-};
-
-
-const MultForm = ({ images, buttonPrevious, buttonNext  }) => {
+const MultForm = ({ images, buttonPrevious, buttonNext }) => {
     const [formData, setForm] = useForm(defaultData)
     const { step, navigation } = useStep({ initialStep: 0, steps })
     const { id } = step
@@ -34,15 +17,15 @@ const MultForm = ({ images, buttonPrevious, buttonNext  }) => {
 
     switch (id) {
         case "escope":
-            return <EscopeInformation {...props} /> 
+            return <EscopeInformation {...props} />
         case "estimate":
             return <MainEstimate {...props} />
         case "outher":
             return <OutherEstimates {...props} />
+        case "maintenance":
+            return <Mainternance {...props} />
         case "overview":
             return <Overview {...props} />
-        case "submit":
-            return <Submit {...props} /> 
         default:
             return null
     }
