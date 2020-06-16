@@ -39,10 +39,21 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         return sumDado
     }
 
-    function resumaHoras(dados){
+    function calculeHoras(dados, row){
+        resumaHoras(dados)
+        row.total = calculaTotal(row)
+    }
+
+    function resumaHoras(dados) {
         setSumRequisito(load(dados, 'requisito'))
         setSumDesenvolvimento(load(dados, 'desenvolvimento'))
         setSumTestes(load(dados, 'testes'))
+        //setSumTotal(calculaTotal(dados))
+    }
+
+    function calculaTotal(dados) {
+        let sumDado = dados.requisito + dados.desenvolvimento + dados.testes
+        return sumDado
     }
 
     function addNewRow() {
@@ -88,7 +99,7 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
                                     blurToSave: true,
                                     afterSaveCell:
                                         (oldValue, newValue, row, column) => {
-                                            resumaHoras(defaultData)
+                                            calculeHoras(defaultData, row)
                                         }
                                 })}
                             />

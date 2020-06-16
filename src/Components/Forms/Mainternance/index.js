@@ -5,14 +5,13 @@ import CardForm from '../../CardForm'
 
 const Mainternance = ({ setForm, formData, navigation, warning, buttonPrevious, buttonNext }) => {
     const { numeroDaOportunidade, cliente } = formData;
-
     const { previous, next } = navigation;
 
     return (
         <div className="form">
             <div className="row">
                 <div className="col-md-12 order-md-1">
-                    <CardForm titleCard={`Manuntenção - OPP: ${numeroDaOportunidade} - ${cliente}`}>
+                    <CardForm titleCard={`Manutenção - OPP: ${numeroDaOportunidade} - ${cliente}`}>
 
                         <div className="row">
                             <ButtonStep
