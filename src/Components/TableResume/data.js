@@ -18,13 +18,14 @@ export const columns = [{
     align: "center",
     editable: false,
     footerAlign: 'center',
+    type: "number",
     footer: dados => dados.reduce((acc, item) => acc + item, 0)
 }];
 
-export const dados = [
+export const dadosResumo = [
     {
         atividades: 'Especificação técnica',
-        horas: 2
+        horas: 0
     },
     {
         atividades: 'Implementação e testes',

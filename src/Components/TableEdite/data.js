@@ -64,6 +64,7 @@ export const columns = [{
 }, {
     dataField: 'testes',
     text: 'TESTES',
+    editable: false,
     headerStyle: () => {
         return { width: "10%" };
     },
@@ -78,6 +79,16 @@ export const columns = [{
     },
     align: "center",
     type: 'number'
+},{
+    dataField: 'sumRequisito',
+    text: 'sumRequisito',
+    editable: false,
+    headerStyle: () => {
+        return { width: "10%" };
+    },
+    align: "center",
+    type: 'number',
+    hidden: true
 }];
 
 
@@ -93,5 +104,3 @@ export const options = {
         text: '30', value: 30
     }]
 }
-
-export const defaultData = []

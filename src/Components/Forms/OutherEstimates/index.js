@@ -4,7 +4,6 @@ import CardForm from '../../CardForm'
 import ButtonStep from '../../ButtonStep'
 import ItemForm from "../../ItemForm";
 import Card from '../../Card'
-import { defaultData } from "../../TableEdite/data";
 
 const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, buttonNext }) => {
     const { 
@@ -116,7 +115,7 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                                 <ItemForm
                                                     label="Homol./produção"
                                                     name="homologacao"
-                                                    type="text"
+                                                    type="number"
                                                     value={homologacao}
                                                     onChange={setForm}
                                                 />
@@ -125,7 +124,7 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                                 <ItemForm
                                                     label="Pós GO-live"
                                                     name="posGoLive"
-                                                    type="text"
+                                                    type="number"
                                                     value={posGoLive}
                                                     onChange={setForm}
                                                 />
@@ -133,8 +132,8 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                             <div className="col-md-4 mb-1">
                                                 <ItemForm
                                                     label="treinamento"
-                                                    name="hoursLeader"
-                                                    type="text"
+                                                    name="treinamento"
+                                                    type="number"
                                                     value={treinamento}
                                                     onChange={setForm}
                                                 />

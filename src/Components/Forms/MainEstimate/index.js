@@ -6,7 +6,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import CardForm from '../../CardForm'
 import ButtonStep from '../../ButtonStep'
 import Card from '../../Card'
-import { defaultData, options, columns } from '../../TableEdite/data'
+import { options, columns } from '../../TableEdite/data'
 
 const widthCard = '18rem'
 const heightCard = '7rem'
@@ -16,7 +16,8 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
     const {
         numeroDaOportunidade,
         requisito,
-        cliente
+        cliente,
+        dados
     } = formData;
 
     const [sumRequisito, setSumRequisito] = useState(requisito)
@@ -28,7 +29,7 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
     let history = useHistory();
 
     useEffect(() => {
-        resumaHoras(defaultData)
+        resumaHoras(dados)
     })
 
     function load(dados, item) {
@@ -42,13 +43,19 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
     function calculeHoras(dados, row){
         resumaHoras(dados)
         row.total = calculaTotal(row)
+        row.testes = calculaTestes(row)
+        row.sumRequisito = row.requisito + (row.requisito * percentRetrabalho)
     }
 
     function resumaHoras(dados) {
         setSumRequisito(load(dados, 'requisito'))
         setSumDesenvolvimento(load(dados, 'desenvolvimento'))
         setSumTestes(load(dados, 'testes'))
-        //setSumTotal(calculaTotal(dados))
+    }
+
+    function calculaTestes(dados){
+        let sumTeste = dados.desenvolvimento / 2
+        return sumTeste
     }
 
     function calculaTotal(dados) {
@@ -58,7 +65,7 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
 
     function addNewRow() {
         const newRow = {
-            id: defaultData.length + 1,
+            id: dados.length + 1,
             descricao: "",
             tipo: "",
             requisito: 0,
@@ -66,7 +73,7 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
             testes: 0,
             total: 0
         }
-        defaultData.push(newRow);
+        dados.push(newRow);
         history.push('/nova-estimativa')
     }
 
@@ -89,7 +96,7 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
                             <BootstrapTable
                                 keyField="id"
                                 bootstrap4
-                                data={defaultData}
+                                data={dados}
                                 columns={columns}
                                 hover
                                 striped
@@ -99,7 +106,7 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
                                     blurToSave: true,
                                     afterSaveCell:
                                         (oldValue, newValue, row, column) => {
-                                            calculeHoras(defaultData, row)
+                                            calculeHoras(dados, row)
                                         }
                                 })}
                             />

@@ -1,14 +1,20 @@
 import React from "react";
 
 import TableResume from '../../TableResume'
-import ButtonStep from '../../ButtonStep'
 import CardForm from '../../CardForm'
 import Card from '../../Card'
 
-const Overview = ({ setForm, formData, navigation, buttonPrevious, buttonNext }) => {
-    const { numeroDaOportunidade, requisito, cliente } = formData;
+const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
+    const { 
+        numeroDaOportunidade, 
+        cliente, 
+        dados, 
+        homologacao, 
+        posGoLive,
+        treinamento 
+    } = formData;
 
-    const { previous, next } = navigation;
+    const { previous } = navigation;
 
     return (
         <div className="form">
@@ -18,7 +24,12 @@ const Overview = ({ setForm, formData, navigation, buttonPrevious, buttonNext })
                         <form className="needs-validation">
                             <div className="row">
                                 <div className="col-md-6 mb-3">
-                                    <TableResume requisito={requisito} />
+                                    <TableResume 
+                                        dados={dados} 
+                                        homologacao={homologacao}
+                                        posGoLive={posGoLive}
+                                        treinamento={treinamento}
+                                    />
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <Card>
