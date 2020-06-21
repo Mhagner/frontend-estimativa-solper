@@ -22,17 +22,17 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
                     <CardForm titleCard={`Dados da Oportunidade - OPP: ${numeroDaOportunidade} - ${cliente}`}>
                         <form className="needs-validation">
                             <div className="row">
-                                <div className="col-md-4 mb-3">
+                                <div className="col-md-2 mb-3">
                                     <ItemForm
-                                        required
                                         label="Data"
                                         name="data"
                                         type="text"
+                                        readonly="readonly"
                                         value={data}
                                         onChange={setForm}
                                     />
                                 </div>
-                                <div className="col-md-4 mb-3">
+                                <div className="col-md-2 mb-3">
                                     <ItemForm
                                         label="Oportunidade"
                                         placeholder="Digite o número"

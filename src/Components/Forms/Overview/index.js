@@ -11,10 +11,19 @@ const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
         dados, 
         homologacao, 
         posGoLive,
-        treinamento 
+        treinamento,
+        horasLider,
+        reuniaoLider,
+        apropriacaoTime,
+        reunioesDiaria,
+        gcs,
+        preparacaoAmbiente,
+        elaboracaoEscopo
     } = formData;
 
     const { previous } = navigation;
+    
+    //console.log(formData)
 
     return (
         <div className="form">
@@ -29,6 +38,13 @@ const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
                                         homologacao={homologacao}
                                         posGoLive={posGoLive}
                                         treinamento={treinamento}
+                                        horasLider={horasLider}
+                                        reuniaoLider={reuniaoLider}
+                                        apropriacaoTime={apropriacaoTime}
+                                        reunioesDiaria={reunioesDiaria}
+                                        gcs={gcs}
+                                        preparacaoAmbiente={preparacaoAmbiente}
+                                        elaboracaoEscopo={elaboracaoEscopo}
                                     />
                                 </div>
                                 <div className="col-md-6 mb-3">

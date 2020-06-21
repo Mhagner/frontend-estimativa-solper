@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import BootstrapTable from 'react-bootstrap-table-next'
 import cellEditFactory from 'react-bootstrap-table2-editor'
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import { Type } from 'react-bootstrap-table2-editor'
 import CardForm from '../../CardForm'
 import ButtonStep from '../../ButtonStep'
 import Card from '../../Card'
@@ -23,6 +24,8 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
     const [sumRequisito, setSumRequisito] = useState(requisito)
     const [sumDesenvolvimento, setSumDesenvolvimento] = useState(0)
     const [sumTestes, setSumTestes] = useState(0)
+    const [hoverIdx, setHoverIdx] = useState(null)
+    const [isSelect, setIsSelect] = useState(false)
 
     const { previous, next } = navigation;
 
@@ -32,6 +35,30 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         resumaHoras(dados)
     })
 
+    const rowEvents = {
+        onMouseEnter: (e, row, rowIndex) => {
+            setHoverIdx(rowIndex)
+        },
+        onMouseLeave: () => {
+            setHoverIdx(null)
+        }
+    }
+
+    const actionFormater = (cell, row, rowIndex, { hoverIdx }) => {
+        if ((hoverIdx !== null || hoverIdx !== undefined) && hoverIdx === rowIndex) {
+            return (
+                <button action="submit" className="btn btn-danger btn-sm" onClick={() => deleteRow(rowIndex)}>
+                    Excluir
+                </button>
+            );
+        }
+        return (
+            <div
+                style={{ width: '20px', height: '20px' }}
+            />
+        );
+    }
+
     function load(dados, item) {
         const req = dados.map(req => (
             req[item]
@@ -40,11 +67,15 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         return sumDado
     }
 
-    function calculeHoras(dados, row){
+    function calculeHoras(dados, row) {
         resumaHoras(dados)
         row.total = calculaTotal(row)
         row.testes = calculaTestes(row)
         row.sumRequisito = row.requisito + (row.requisito * percentRetrabalho)
+        row.sumDesenvolvimento = row.desenvolvimento + (row.desenvolvimento * percentRetrabalho)
+        row.sumTestes = row.testes + (row.testes * percentRetrabalho)
+        console.log(row.sumDesenvolvimento)
+        console.log(row.sumTestes)
     }
 
     function resumaHoras(dados) {
@@ -53,19 +84,21 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         setSumTestes(load(dados, 'testes'))
     }
 
-    function calculaTestes(dados){
+    function calculaTestes(dados) {
         let sumTeste = dados.desenvolvimento / 2
         return sumTeste
     }
 
     function calculaTotal(dados) {
-        let sumDado = dados.requisito + dados.desenvolvimento + dados.testes
+        let teste = calculaTestes(dados)
+        let sumDado = dados.requisito + dados.desenvolvimento + teste
         return sumDado
     }
 
     function addNewRow() {
         const newRow = {
             id: dados.length + 1,
+            item: dados.length + 1,
             descricao: "",
             tipo: "",
             requisito: 0,
@@ -77,12 +110,147 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         history.push('/nova-estimativa')
     }
 
-    let percentRetrabalho = 0.05
+    function deleteRow(index) {
+        dados.splice(index, 1)
+        history.push('/nova-estimativa')
+    }
+
+
+
+    const percentRetrabalho = 0.05
 
     let retRequisito = sumRequisito * percentRetrabalho
     let retDesenvolvimento = sumDesenvolvimento * percentRetrabalho
     let retTestes = sumTestes * percentRetrabalho
     let total = sumRequisito + sumDesenvolvimento + sumTestes + retRequisito + retDesenvolvimento + retTestes
+
+    const columns = [{
+        dataField: 'id',
+        text: 'id',
+        headerStyle: () => {
+            return { width: "6%" };
+        },
+        align: "center",
+        hidden: true
+    }, {
+        dataField: 'item',
+        text: 'ITEM',
+        type: 'number',
+        headerStyle: () => {
+            return { width: "6%" };
+        },
+        align: "center"
+    }, {
+        dataField: 'descricao',
+        text: 'DESCRIÇÃO DO ITEM',
+        editor: {
+            type: Type.TEXTAREA
+        },
+        headerStyle: () => {
+            return { width: "30%" };
+        }
+    },
+    {
+        dataField: 'tipo',
+        text: 'TIPO',
+        editor: {
+            type: Type.SELECT,
+            options: [
+                {
+                    value: "Workflow (Tela)",
+                    label: "Workflow (Tela)"
+                },
+                {
+                    value: "Workflow (Orquestração)",
+                    label: "Workflow (Orquestração)"
+                },
+                {
+                    value: "Customizado",
+                    label: "Customizado"
+                },
+                {
+                    value: "Integra Fácil",
+                    label: "Integra Fácil"
+                }
+            ]
+        },
+        headerStyle: () => {
+            return { width: "20%" };
+        }
+    }, {
+        dataField: 'requisito',
+        text: 'REQUISITO',
+        headerStyle: () => {
+            return { width: "10%" };
+        },
+        align: "center",
+        type: 'number'
+    }, {
+        dataField: 'desenvolvimento',
+        text: 'DESENV.',
+        headerStyle: () => {
+            return { width: "10%" };
+        },
+        align: "center",
+        type: 'number'
+    }, {
+        dataField: 'testes',
+        text: 'TESTES',
+        editable: false,
+        headerStyle: () => {
+            return { width: "10%" };
+        },
+        align: "center",
+        type: 'number'
+    }, {
+        dataField: 'total',
+        text: 'TOTAL',
+        editable: false,
+        headerStyle: () => {
+            return { width: "10%" };
+        },
+        align: "center",
+        type: 'number'
+    }, {
+        text: "AÇÃO",
+        isDummyField: true,
+        formatter: actionFormater,
+        editable:false,
+        formatExtraData: { hoverIdx },
+        headerStyle: { width: '90px' },
+        style: { height: '30px' }
+    }, {
+        dataField: 'sumRequisito',
+        text: 'sumRequisito',
+        editable: false,
+        headerStyle: () => {
+            return { width: "10%" };
+        },
+        align: "center",
+        type: 'number',
+        hidden: true
+    }, {
+        dataField: 'sumDesenvolvimento',
+        text: 'sumDesenvolvimento',
+        editable: false,
+        headerStyle: () => {
+            return { width: "10%" };
+        },
+        align: "center",
+        type: 'number',
+        hidden: true
+    }, {
+        dataField: 'sumTestes',
+        text: 'sumTestes',
+        editable: false,
+        headerStyle: () => {
+            return { width: "10%" };
+        },
+        align: "center",
+        type: 'number',
+        hidden: true
+    },];
+
 
     return (
         <div className="form">
@@ -98,6 +266,7 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
                                 bootstrap4
                                 data={dados}
                                 columns={columns}
+                                rowEvents={rowEvents}
                                 hover
                                 striped
                                 pagination={paginationFactory(options)}

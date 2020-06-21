@@ -1,3 +1,13 @@
+function zeroFill(n){
+    return ('0' + n).slice(-2);
+}
+
+function obtemDataAtual() {
+    let now = new Date()
+    let data = zeroFill(now.getDate()) + '/' + zeroFill(now.getMonth() + 1) + '/' + now.getFullYear()
+    return data
+}
+
 export const steps = [
     { id: "escope" },
     { id: "estimate" },
@@ -10,7 +20,7 @@ export const steps = [
 export const defaultData = {
     responsavelEscopo: "",
     responsavelEstimativa: "",
-    data: "",
+    data: obtemDataAtual(),
     cliente: "",
     numeroDaOportunidade: "",
     horasLider: 0,
@@ -23,7 +33,6 @@ export const defaultData = {
     homologacao: 0,
     posGoLive: 0,
     treinamento: 0,
-    requisito: 0,
-    dados: [],
-    sumRequisito: 0
+    valorHora: 0,
+    dados: []
 };

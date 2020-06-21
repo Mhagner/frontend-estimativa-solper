@@ -1,5 +1,9 @@
 import { Type } from 'react-bootstrap-table2-editor'
 
+function cellDecimalFormatter(cell, row) {
+    return cell.toFixed(1)
+}
+
 export const columns = [{
     dataField: 'atividades',
     text: 'Atividades',
@@ -19,6 +23,7 @@ export const columns = [{
     editable: false,
     footerAlign: 'center',
     type: "number",
+    formatter: cellDecimalFormatter,
     footer: dados => dados.reduce((acc, item) => acc + item, 0)
 }];
 

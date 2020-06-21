@@ -23,6 +23,8 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
 
     const { previous, next } = navigation;
 
+    console.log(horasLider)
+
     return (
         <div className="form">
             <div className="row">
@@ -37,7 +39,7 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                                 <ItemForm
                                                     label="GP Líder"
                                                     name="horasLider"
-                                                    type="text"
+                                                    type="number"
                                                     value={horasLider}
                                                     onChange={setForm}
                                                 />
@@ -46,7 +48,7 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                                 <ItemForm
                                                     label="Reuniões Líder"
                                                     name="reuniaoLider"
-                                                    type="text"
+                                                    type="number"
                                                     value={reuniaoLider}
                                                     onChange={setForm}
                                                 />
@@ -55,7 +57,7 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                                 <ItemForm
                                                     label="Apropriação time"
                                                     name="apropriacaoTime"
-                                                    type="text"
+                                                    type="number"
                                                     value={apropriacaoTime}
                                                     onChange={setForm}
                                                 />
@@ -66,7 +68,7 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                                 <ItemForm
                                                     label="Reuniões diária"
                                                     name="reunioesDiaria"
-                                                    type="text"
+                                                    type="number"
                                                     value={reunioesDiaria}
                                                     onChange={setForm}
                                                 />
@@ -81,7 +83,7 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                                 <ItemForm
                                                     label="GCS/Setup"
                                                     name="gcs"
-                                                    type="text"
+                                                    type="number"
                                                     value={gcs}
                                                     onChange={setForm}
                                                 />
@@ -90,7 +92,7 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                                 <ItemForm
                                                     label="Prep. de ambiente"
                                                     name="preparacaoAmbiente"
-                                                    type="text"
+                                                    type="number"
                                                     value={preparacaoAmbiente}
                                                     onChange={setForm}
                                                 />
@@ -99,7 +101,7 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                                 <ItemForm
                                                     label="Elab. do escopo"
                                                     name="elaboracaoEscopo"
-                                                    type="text"
+                                                    type="number"
                                                     value={elaboracaoEscopo}
                                                     onChange={setForm}
                                                 />
