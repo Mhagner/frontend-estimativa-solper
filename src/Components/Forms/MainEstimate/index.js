@@ -7,7 +7,7 @@ import { Type } from 'react-bootstrap-table2-editor'
 import CardForm from '../../CardForm'
 import ButtonStep from '../../ButtonStep'
 import Card from '../../Card'
-import { options, columns } from '../../TableEdite/data'
+import { options } from '../../TableEdite/data'
 
 const widthCard = '18rem'
 const heightCard = '7rem'
@@ -25,7 +25,6 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
     const [sumDesenvolvimento, setSumDesenvolvimento] = useState(0)
     const [sumTestes, setSumTestes] = useState(0)
     const [hoverIdx, setHoverIdx] = useState(null)
-    const [isSelect, setIsSelect] = useState(false)
 
     const { previous, next } = navigation;
 
@@ -47,9 +46,7 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
     const actionFormater = (cell, row, rowIndex, { hoverIdx }) => {
         if ((hoverIdx !== null || hoverIdx !== undefined) && hoverIdx === rowIndex) {
             return (
-                <button action="submit" className="btn btn-danger btn-sm" onClick={() => deleteRow(rowIndex)}>
-                    Excluir
-                </button>
+                <i class="fa fa-trash" onClick={() => deleteRow(rowIndex)}></i>
             );
         }
         return (
@@ -212,13 +209,17 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         align: "center",
         type: 'number'
     }, {
+        //Ação excluir linha
         text: "AÇÃO",
-        isDummyField: true,
+        isDummyField: false,
         formatter: actionFormater,
-        editable:false,
+        editable: false,
         formatExtraData: { hoverIdx },
-        headerStyle: { width: '90px' },
-        style: { height: '30px' }
+        headerStyle: () => {
+            return { width: "10%" };
+        },
+        align: 'center'
+        //style: { height: '10px' }
     }, {
         dataField: 'sumRequisito',
         text: 'sumRequisito',
