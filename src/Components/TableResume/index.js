@@ -1,9 +1,9 @@
 import React from 'react'
 import BootstrapTable from 'react-bootstrap-table-next'
 
-import { columns, dadosResumo } from './data'
+import { columns } from './data'
 
-const TableResume = ({ dados, homologacao, posGoLive, treinamento, horasLider, reuniaoLider, apropriacaoTime, reunioesDiaria, gcs, preparacaoAmbiente, elaboracaoEscopo }) => {
+const TableResume = ({ dados, dadosResumo, homologacao, posGoLive, treinamento, horasLider, reuniaoLider, apropriacaoTime, reunioesDiaria, gcs, preparacaoAmbiente, elaboracaoEscopo }) => {
 
     console.log(horasLider)
 
@@ -18,7 +18,8 @@ const TableResume = ({ dados, homologacao, posGoLive, treinamento, horasLider, r
         dadosResumo[2].horas = parseInt(homologacao)
         dadosResumo[3].horas = parseInt(posGoLive)
         dadosResumo[4].horas = parseInt(treinamento)
-
+        dadosResumo[5].horas = (dadosResumo[0].horas + dadosResumo[1].horas + dadosResumo[2].horas
+            + dadosResumo[3].horas + dadosResumo[4].horas) * 0.20
     }
 
     function load(dados, item) {

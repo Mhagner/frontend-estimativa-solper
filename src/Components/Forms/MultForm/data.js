@@ -23,6 +23,7 @@ export const defaultData = {
     data: obtemDataAtual(),
     cliente: "",
     numeroDaOportunidade: "",
+    descricaoDaOportunidade: "",
     horasLider: 0,
     reuniaoLider: 0,
     apropriacaoTime: 0,
@@ -33,6 +34,37 @@ export const defaultData = {
     homologacao: 0,
     posGoLive: 0,
     treinamento: 0,
+    gp: 0,
     valorHora: 0,
-    dados: []
+    custoInfra: "798",
+    custoMensal: 0,
+    dados: [],
+    dadosResumo: [
+        {
+            atividades: 'Especificação técnica',
+            horas: 0
+        },
+        {
+            atividades: 'Implementação e testes',
+            horas: 0
+        },
+        {
+            atividades: 'Implantação/homologação',
+            horas: 0
+        },
+        {
+            atividades: 'Acompanhamento pós GO-live',
+            horas: 0
+        },
+        {
+            atividades: 'Treinamento',
+            horas: 0
+        },
+        {
+            atividades: 'Gerenciamento do projeto',
+            horas: 0
+        }
+    ]
 };
+
+export const custoInfraDefault = 0

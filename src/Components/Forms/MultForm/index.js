@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm, useStep } from 'react-hooks-helper'
 
 import EscopeInformation from '../EscopeInformation'
@@ -10,10 +10,13 @@ import { defaultData, steps } from './data'
 
 const MultForm = ({ images, buttonPrevious, buttonNext }) => {
     const [formData, setForm] = useForm(defaultData)
+    //const [custoInfra, setCustoInfra] = useState(custoInfraDefault)
     const { step, navigation } = useStep({ initialStep: 0, steps })
     const { id } = step
 
-    const props = { formData, setForm, navigation, buttonNext, buttonPrevious }
+    const props = {
+        formData, setForm, navigation, buttonNext, buttonPrevious
+    }
 
     switch (id) {
         case "escope":

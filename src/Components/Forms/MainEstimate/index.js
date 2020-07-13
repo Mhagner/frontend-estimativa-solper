@@ -16,6 +16,7 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
 
     const {
         numeroDaOportunidade,
+        descricaoDaOportunidade,
         requisito,
         cliente,
         dados
@@ -71,8 +72,6 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         row.sumRequisito = row.requisito + (row.requisito * percentRetrabalho)
         row.sumDesenvolvimento = row.desenvolvimento + (row.desenvolvimento * percentRetrabalho)
         row.sumTestes = row.testes + (row.testes * percentRetrabalho)
-        console.log(row.sumDesenvolvimento)
-        console.log(row.sumTestes)
     }
 
     function resumaHoras(dados) {
@@ -257,7 +256,7 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         <div className="form">
             <div className="row">
                 <div className="col-md-12 order-md-1">
-                    <CardForm titleCard={`Estimativa Principal - OPP: ${numeroDaOportunidade} - ${cliente}`}>
+                    <CardForm titleCard={`Estimativa Principal - OPP: ${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}>
                         <div className="btn-group mb-3">
                             <button className="btn btn-primary" onClick={() => addNewRow()}>Novo item</button>
                         </div>

@@ -23,8 +23,6 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
 
     const { previous, next } = navigation;
 
-    console.log(horasLider)
-
     return (
         <div className="form">
             <div className="row">
@@ -32,50 +30,6 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                     <CardForm titleCard={`Dados das Demais Estimativas - OPP: ${numeroDaOportunidade} - ${cliente}`}>
                         <form className="needs-validation">
                             <div className="row">
-                                <div className="col-md-6 mb-3">
-                                    <Card title="Atividades internas" largura="120">
-                                        <div className="row">
-                                            <div className="col-md-4 mb-1">
-                                                <ItemForm
-                                                    label="GP Líder"
-                                                    name="horasLider"
-                                                    type="number"
-                                                    value={horasLider}
-                                                    onChange={setForm}
-                                                />
-                                            </div>
-                                            <div className="col-md-4 mb-1">
-                                                <ItemForm
-                                                    label="Reuniões Líder"
-                                                    name="reuniaoLider"
-                                                    type="number"
-                                                    value={reuniaoLider}
-                                                    onChange={setForm}
-                                                />
-                                            </div>
-                                            <div className="col-md-4 mb-1">
-                                                <ItemForm
-                                                    label="Apropriação time"
-                                                    name="apropriacaoTime"
-                                                    type="number"
-                                                    value={apropriacaoTime}
-                                                    onChange={setForm}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-md-4 mb-1">
-                                                <ItemForm
-                                                    label="Reuniões diária"
-                                                    name="reunioesDiaria"
-                                                    type="number"
-                                                    value={reunioesDiaria}
-                                                    onChange={setForm}
-                                                />
-                                            </div>
-                                        </div>
-                                    </Card>
-                                </div>
                                 <div className="col-md-6 mb-3">
                                     <Card title="Atividades técnicas" largura="120">
                                         <div className="row">
@@ -137,6 +91,50 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
                                                     name="treinamento"
                                                     type="number"
                                                     value={treinamento}
+                                                    onChange={setForm}
+                                                />
+                                            </div>
+                                        </div>
+                                    </Card>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <Card title="Atividades internas" largura="120">
+                                        <div className="row">
+                                            <div className="col-md-4 mb-1">
+                                                <ItemForm
+                                                    label="GP Líder"
+                                                    name="horasLider"
+                                                    type="number"
+                                                    value={horasLider}
+                                                    onChange={setForm}
+                                                />
+                                            </div>
+                                            <div className="col-md-4 mb-1">
+                                                <ItemForm
+                                                    label="Reuniões Líder"
+                                                    name="reuniaoLider"
+                                                    type="number"
+                                                    value={reuniaoLider}
+                                                    onChange={setForm}
+                                                />
+                                            </div>
+                                            <div className="col-md-4 mb-1">
+                                                <ItemForm
+                                                    label="Apropriação time"
+                                                    name="apropriacaoTime"
+                                                    type="number"
+                                                    value={apropriacaoTime}
+                                                    onChange={setForm}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-4 mb-1">
+                                                <ItemForm
+                                                    label="Reuniões diária"
+                                                    name="reunioesDiaria"
+                                                    type="number"
+                                                    value={reunioesDiaria}
                                                     onChange={setForm}
                                                 />
                                             </div>

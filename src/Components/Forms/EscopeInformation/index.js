@@ -10,7 +10,8 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
         responsavelEstimativa,
         data,
         numeroDaOportunidade,
-        cliente
+        cliente,
+        descricaoDaOportunidade
     } = formData;
 
     const { next } = navigation;
@@ -19,7 +20,7 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
         <div className="form">
             <div className="row">
                 <div className="col-md-12 order-md-1">
-                    <CardForm titleCard={`Dados da Oportunidade - OPP: ${numeroDaOportunidade} - ${cliente}`}>
+                    <CardForm titleCard={`Dados da Oportunidade - OPP: ${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}>
                         <form className="needs-validation">
                             <div className="row">
                                 <div className="col-md-2 mb-3">
@@ -42,13 +43,23 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
                                         onChange={setForm}
                                     />
                                 </div>
-                                <div className="col-md-4 mb-3">
+                                <div className="col-md-3 mb-3">
                                     <Combobox
                                         label="Cliente"
                                         name="cliente"
                                         value={cliente}
                                         onChange={setForm}
 
+                                    />
+                                </div>
+                                <div className="col-md-4 mb-3">
+                                    <ItemForm
+                                        label="Descrição da oportunidade"
+                                        placeholder="Digite a descrição"
+                                        name="descricaoDaOportunidade"
+                                        type="text"
+                                        value={descricaoDaOportunidade}
+                                        onChange={setForm}
                                     />
                                 </div>
                             </div>
