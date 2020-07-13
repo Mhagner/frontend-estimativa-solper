@@ -4,6 +4,7 @@ import TableResume from '../../TableResume'
 import CardForm from '../../CardForm'
 import Card from '../../Card'
 import ItemForm from '../../ItemForm'
+import { calculaTotalManutencao, calculaColuna } from '../../../Utils/metodos'
 
 const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
     const {
@@ -28,23 +29,8 @@ const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
 
     const { previous } = navigation;
 
-    function calculaTotalManutencao() {
-        const req = load(dados, 'sumRequisito')
-        const dev = load(dados, 'sumDesenvolvimento')
-        const teste = load(dados, 'sumTestes')
-        const total = req + dev + teste
-        const resultado = (total * valorHora) * 0.01
 
-        return resultado.toFixed(2)
-    }
-
-    function load(dados, item) {
-        const req = dados.map(req => (
-            req[item]
-        ))
-        const sumDado = req.reduce((acc, item) => acc + item, 0)
-        return sumDado
-    }
+    const totalManutenção = calculaTotalManutencao(dados, calculaColuna, valorHora, 0.01)
 
     return (
         <div className="form">
@@ -78,7 +64,7 @@ const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
                                                     label="Custo de manutenção mensal"
                                                     type="text"
                                                     name="custoMensal"
-                                                    value={`R$ ${calculaTotalManutencao()}`}
+                                                    value={`R$ ${totalManutenção}`}
                                                     onChange={setForm}
                                                     readonly="readonly"
                                                 />

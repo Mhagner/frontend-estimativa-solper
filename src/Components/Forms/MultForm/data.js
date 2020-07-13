@@ -36,7 +36,7 @@ export const defaultData = {
     treinamento: 0,
     gp: 0,
     valorHora: 0,
-    custoInfra: "798",
+    custoInfra: "",
     custoMensal: 0,
     dados: [],
     dadosResumo: [

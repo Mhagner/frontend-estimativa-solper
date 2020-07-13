@@ -49,7 +49,6 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
                                         name="cliente"
                                         value={cliente}
                                         onChange={setForm}
-
                                     />
                                 </div>
                                 <div className="col-md-4 mb-3">

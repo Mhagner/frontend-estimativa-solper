@@ -2,16 +2,15 @@ import React from 'react'
 import BootstrapTable from 'react-bootstrap-table-next'
 
 import { columns } from './data'
+import { calculaColuna } from '../../Utils/metodos'
 
 const TableResume = ({ dados, dadosResumo, homologacao, posGoLive, treinamento, horasLider, reuniaoLider, apropriacaoTime, reunioesDiaria, gcs, preparacaoAmbiente, elaboracaoEscopo }) => {
 
-    console.log(horasLider)
-
     function calculaResumo() {
-        let dev = load(dados, 'sumDesenvolvimento') || 0;
-        let teste = load(dados, 'sumTestes') || 0
+        let dev = calculaColuna(dados, 'sumDesenvolvimento') || 0;
+        let teste = calculaColuna(dados, 'sumTeste') || 0;
 
-        dadosResumo[0].horas = load(dados, 'sumRequisito')
+        dadosResumo[0].horas = calculaColuna(dados, 'sumRequisito') || 0;
         dadosResumo[1].horas = dev + teste + parseInt(horasLider) + parseInt(reuniaoLider)
             + parseInt(apropriacaoTime) + parseInt(reunioesDiaria) + parseInt(gcs)
             + parseInt(preparacaoAmbiente) + parseInt(elaboracaoEscopo)
@@ -20,14 +19,6 @@ const TableResume = ({ dados, dadosResumo, homologacao, posGoLive, treinamento, 
         dadosResumo[4].horas = parseInt(treinamento)
         dadosResumo[5].horas = (dadosResumo[0].horas + dadosResumo[1].horas + dadosResumo[2].horas
             + dadosResumo[3].horas + dadosResumo[4].horas) * 0.20
-    }
-
-    function load(dados, item) {
-        const req = dados.map(req => (
-            req[item]
-        ))
-        const sumDado = req.reduce((acc, item) => acc + item, 0)
-        return sumDado
     }
 
     calculaResumo()
