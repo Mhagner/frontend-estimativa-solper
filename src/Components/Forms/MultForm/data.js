@@ -21,7 +21,9 @@ export const defaultData = {
     responsavelEscopo: "",
     responsavelEstimativa: "",
     data: obtemDataAtual(),
+    id: "",
     cliente: "",
+    tipo: "",
     numeroDaOportunidade: "",
     descricaoDaOportunidade: "",
     horasLider: 0,
@@ -29,7 +31,7 @@ export const defaultData = {
     apropriacaoTime: 0,
     reunioesDiaria: 0,
     gcs: 0,
-    preparacaoAmbiente: 0,
+    preparacaoAmbiente: 8,
     elaboracaoEscopo: 0,
     homologacao: 0,
     posGoLive: 0,
@@ -37,7 +39,6 @@ export const defaultData = {
     gp: 0,
     valorHora: 0,
     custoInfra: "",
-    custoMensal: 0,
     dados: [],
     dadosResumo: [
         {
@@ -66,5 +67,3 @@ export const defaultData = {
         }
     ]
 };
-
-export const custoInfraDefault = 0

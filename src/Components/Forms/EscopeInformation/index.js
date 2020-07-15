@@ -3,6 +3,7 @@ import React from "react";
 import ItemForm from "../../ItemForm";
 import Combobox from "../../Combobox"
 import CardForm from '../../CardForm'
+import { clientes } from '../../../Utils/mocks/mockClientes'
 
 const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
     const {
@@ -48,6 +49,7 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
                                         label="Cliente"
                                         name="cliente"
                                         value={cliente}
+                                        lista={clientes}
                                         onChange={setForm}
                                     />
                                 </div>
