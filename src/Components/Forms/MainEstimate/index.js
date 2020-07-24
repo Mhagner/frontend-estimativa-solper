@@ -111,9 +111,7 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         history.push('/nova-estimativa')
     }
 
-
-
-    const percentRetrabalho = 0.05
+    const percentRetrabalho = 0.10
 
     let retRequisito = sumRequisito * percentRetrabalho
     let retDesenvolvimento = sumDesenvolvimento * percentRetrabalho

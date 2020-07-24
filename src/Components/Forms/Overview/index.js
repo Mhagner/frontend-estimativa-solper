@@ -1,4 +1,5 @@
 import React from "react";
+import { PDFViewer } from '@react-pdf/renderer'
 
 import TableResume from '../../TableResume'
 import CardForm from '../../CardForm'
@@ -81,12 +82,11 @@ const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
                                                 />
                                             </div>
                                         </div>
-
                                     </Card>
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-md-6 mb-3">
+                                <div className="col-md-12 mb-3">
                                     <Card>
                                         <div className="row">
                                             <div className="col-md-6 mb-4">

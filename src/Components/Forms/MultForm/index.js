@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm, useStep } from 'react-hooks-helper'
 
 import EscopeInformation from '../EscopeInformation'

@@ -9,7 +9,7 @@ import * as S from './styled'
 function Main(props) {
     return (
         <>
-            <div classNameName='row'>
+            <div className='row'>
                 <SideBar>
                     <ul className="nav flex-column">
                         <DivSidebar description="Funcionalidades" />

@@ -7,6 +7,10 @@ import Estimativas from './Pages/Estimativas'
 import TiposSolucao from './Pages/TiposSolucao'
 import BaseConhecimento from './Pages/BaseConhecimento'
 import Parametrizacoes from './Pages/Parametrizacoes'
+import Usuarios from './Pages/Usuarios'
+import ConfiguracaoEstimativa from './Pages/ConfiguracaoEstimativa'
+import Clientes from './Pages/Clientes'
+import InfraNuvem from './Pages/InfraNuvem'
 
 function Routes() {
   return (
@@ -21,7 +25,11 @@ function Routes() {
           window.location.href = 'https://www.office.com/launch/word?auth=2'
           return null
         }} />
-        <Route path="/parametrizacoes" component={Parametrizacoes} />
+        <Route exact path="/parametrizacoes" component={Parametrizacoes} />
+        <Route path="/parametrizacoes/usuarios" component={Usuarios} />
+        <Route path="/parametrizacoes/estimativa" component={ConfiguracaoEstimativa} />
+        <Route path="/parametrizacoes/clientes" component={Clientes} />
+        <Route path="/parametrizacoes/infra-nuvem" component={InfraNuvem} />
       </Switch>
     </BrowserRouter>
   )
