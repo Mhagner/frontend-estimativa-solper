@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import ItemForm from "../../ItemForm";
 import Combobox from "../../Combobox"
 import CardForm from '../../CardForm'
-import { clientes } from '../../../Utils/mocks/mockClientes'
+//import { clientes } from '../../../Utils/mocks/mockClientes'
+import api from '../../../Utils/api'
 
 const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
     const {
@@ -14,6 +15,15 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
         cliente,
         descricaoDaOportunidade
     } = formData;
+
+    const [clientes, setClientes] = useState([])
+
+    useEffect(() => {
+        api.get('clientes')
+            .then(response => {
+                setClientes(response.data)
+            })
+    }, [])
 
     const { next } = navigation;
 

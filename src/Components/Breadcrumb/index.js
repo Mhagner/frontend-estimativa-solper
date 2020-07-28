@@ -8,7 +8,7 @@ const Breadcrumb = ({ lista }) => {
                 {lista.map((item, index) => (
                     <li
                         key={index}
-                        className="breadcrumb-tem"
+                        className="breadcrumb-item"
                         ariaCurrent={item.current}>
                         {item.link &&
                             <Link
@@ -16,7 +16,7 @@ const Breadcrumb = ({ lista }) => {
                                 to={item.link}>{item.descricao}
                             </Link>}
                         {!item.link &&
-                            ` /${item.descricao}`}
+                            `${item.descricao}`}
                     </li>
                 ))}
             </ol>

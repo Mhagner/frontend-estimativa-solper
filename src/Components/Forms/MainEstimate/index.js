@@ -8,6 +8,7 @@ import CardForm from '../../CardForm'
 import ButtonStep from '../../ButtonStep'
 import Card from '../../Card'
 import { options } from '../../TableEdite/data'
+import './style.css'
 
 const widthCard = '18rem'
 const heightCard = '7rem'
@@ -47,7 +48,11 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
     const actionFormater = (cell, row, rowIndex, { hoverIdx }) => {
         if ((hoverIdx !== null || hoverIdx !== undefined) && hoverIdx === rowIndex) {
             return (
-                <i class="fa fa-trash" onClick={() => deleteRow(rowIndex)}></i>
+                <button className='btn btn-default btn-custom'
+                    onClick={() => deleteRow(rowIndex)}>
+                    <i className='fa fa-trash-o btn-icon'></i>
+                </button>
+                //<i class="fa fa-trash" onClick={() => deleteRow(rowIndex)}></i>
             );
         }
         return (

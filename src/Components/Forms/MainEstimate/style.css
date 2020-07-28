@@ -1,0 +1,25 @@
+.btn-custom {
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+    background-color: rgb(191, 203, 236);
+}
+
+.btn-icon {
+    padding-top: 2px; 
+}
+
+.btn-custom-new {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+    background-color: rgb(191, 203, 236);
+}

@@ -6,8 +6,10 @@ const Card = ({ color, description, title, largura, children, imagem, ...outherP
             <h6 className={`card-title text-${color}`}>{title}</h6>
             <h4 className={`card-text text-${color}`} {...outherProps}>{description}</h4>
             {children}
-            <div>
-                <img src={imagem} />
+            <div className="row">
+                <div className="col-md-4">
+                    <img src={imagem} />
+                </div>
             </div>
         </div>
     </div>
