@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import ButtonStep from '../../ButtonStep'
 import CardForm from '../../CardForm'
@@ -6,7 +6,8 @@ import Card from '../../Card'
 import ItemForm from '../../ItemForm'
 import RadioButton from '../../RadioButton'
 import { calculaTotalManutencao, calculaColuna } from '../../../Utils/metodos'
-import { servidores } from '../../../Utils/mocks/mockCustoServidores'
+//import { servidores } from '../../../Utils/mocks/mockCustoServidores'
+import api from '../../../Utils/api'
 
 
 
@@ -14,6 +15,22 @@ const Mainternance = ({ setForm, formData, navigation, buttonPrevious, buttonNex
     const { numeroDaOportunidade, cliente, valorHora, custoInfra, dados } = formData;
 
     const { previous, next } = navigation;
+
+    const [servidores, setServidores] = useState([])
+
+    useEffect(()=>{
+        obtenhaServidores()
+    }, [])
+
+    function obtenhaServidores(){
+        api.get('infra')
+        .then(response => {
+            setServidores(response.data)
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+    }
 
     const totalManutenção = calculaTotalManutencao(dados, calculaColuna, valorHora, 0.01)
 
@@ -50,11 +67,11 @@ const Mainternance = ({ setForm, formData, navigation, buttonPrevious, buttonNex
                                 <Card title="Custo de infraestrutura nuvem">
                                     <div className="col-md-12 mb-3">
                                         {servidores.map((servidor) => (
-                                            <div className="row" key={servidor.id}>
+                                            <div className="row" key={servidor._id}>
                                                 <RadioButton
-                                                    label={servidor.descricao}
-                                                    value={servidor.valor}
-                                                    checked={custoInfra === servidor.valor}
+                                                    label={`${servidor.instancia} | ${servidor.cpu} | ${servidor.ram} | ${servidor.custo}`}
+                                                    value={servidor.custo}
+                                                    checked={custoInfra === servidor.custo}
                                                     onChange={setForm}
                                                     name="custoInfra"
                                                 />

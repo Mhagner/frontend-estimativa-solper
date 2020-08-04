@@ -17,7 +17,7 @@ const useForm = (callback) => {
         e.preventDefault();
         callback();
     };
-    return [{ values }, reset, handleChange, handleSubmit];
+    return [{ values }, setValues, reset, handleChange, handleSubmit];
 };
 
 export default useForm;
