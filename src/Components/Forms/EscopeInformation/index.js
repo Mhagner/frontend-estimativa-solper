@@ -25,6 +25,10 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
             })
     }, [])
 
+    
+
+
+
     const { next } = navigation;
 
     return (

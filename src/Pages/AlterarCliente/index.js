@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Main from '../../Components/Main'
 import Breadcrumb from '../../Components/Breadcrumb'
 import ItemForm from '../../Components/ItemForm'
@@ -8,10 +8,13 @@ import { useHistory } from 'react-router-dom'
 import useForm from '../../Utils/hooks/useForm'
 import api from '../../Utils/api'
 
-const NovoCliente = () => {
+const AlterarCliente = () => {
     const [{ values }, reset, handleChange, handleSubmit] = useForm();
+    const [id, setId] = useState(null);
 
     let history = useHistory()
+
+    //console.log(getId)
 
     const lista = [
         {
@@ -23,20 +26,27 @@ const NovoCliente = () => {
             descricao: "Clientes"
         },
         {
-            descricao: "Novo cliente",
+            descricao: "Alterar cliente",
             current: 'page',
             ativo: "active"
         },
     ]
 
-    function cadastrarCliente(e) {
-        api.post('clientes', values)
+    function alterarCliente(e, id) {
+        api.put(`clientes/${id}`, values)
             .then(response => {
                 reset()
                 history.push('/parametrizacoes/clientes')
             })
             .catch(response => {
                 console.log("Cliente já cadastrado na base!")
+            })
+    }
+
+    function obterCliente(id) {
+        api.get(`clientes/${id}`)
+            .then(response => {
+                console.log(response.data)
             })
     }
 
@@ -57,7 +67,7 @@ const NovoCliente = () => {
             <div className="form">
                 <div className="row">
                     <div className="col-md-10 order-md-1">
-                        <form onSubmit={handleSubmit(cadastrarCliente)}>
+                        <form onSubmit={handleSubmit(alterarCliente)}>
                             <div className="row">
                                 <div className="col-md-4 mb-3">
                                     <ItemForm
@@ -100,7 +110,7 @@ const NovoCliente = () => {
                                     <button
                                         type="submit"
                                         className="btn btn-success">
-                                        Salvar
+                                        Alterar
                                         </button>
                                 </div>
                             </div>
@@ -114,4 +124,4 @@ const NovoCliente = () => {
 };
 
 
-export default NovoCliente;
+export default AlterarCliente;

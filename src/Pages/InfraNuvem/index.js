@@ -6,6 +6,7 @@ import cellEditFactory from 'react-bootstrap-table2-editor'
 import api from '../../Utils/api'
 import ItemForm from '../../Components/ItemForm'
 import useForm from '../../Utils/hooks/useForm'
+import Loader from 'react-loader-spinner'
 import { useHistory } from 'react-router-dom'
 
 const defaultData = {
@@ -15,11 +16,12 @@ const defaultData = {
 }
 
 const InfraNuvem = () => {
-    const [{ values }, setValues, reset, handleChange, handleSubmit] = useForm();
+    const [{ values }, reset, handleChange, handleSubmit] = useForm();
     //const [data, setData] = useState('')
 
     const [infra, setInfra] = useState(defaultData)
     const [alterou, setAlterou] = useState(false)
+    const [loader, setLoader] = useState(false)
 
     let history = useHistory()
 
@@ -29,29 +31,34 @@ const InfraNuvem = () => {
     }, [])
 
     function obtenhaInfra() {
+        setLoader(true)
         api.get('infra/5f237bd6e9c53a22a8a9edf9')
             .then(response => {
                 setInfra(response.data)
-            })
-    }
-
-    function salvarInfra(e){
-        if(alterou){
-            api.put('infra/5f237bd6e9c53a22a8a9edf9', infra)
-            .then(response => {
-                console.log("sucesso!")
-                history.push('/parametrizacoes')
+                setLoader(false)
             })
             .catch(error => {
-                console.log("erro!")
+                console.log("Erro ao obter as informações de infraestrutura!")
             })
-        }else{
-            console.log("Não teve alterações!")
-        }
-        
     }
 
-    function cancelarAlteracao(){
+    function salvarInfra(e) {
+        if (alterou) {
+            api.put('infra/5f237bd6e9c53a22a8a9edf9', infra)
+                .then(response => {
+                    setAlterou(false)
+                    console.log("sucesso!")
+                    history.push('/parametrizacoes')
+                })
+                .catch(error => {
+                    console.log("erro!")
+                })
+        } else {
+            console.log("Não teve alterações!")
+        }
+    }
+
+    function cancelarAlteracao() {
         history.push('/parametrizacoes')
     }
 
@@ -134,38 +141,46 @@ const InfraNuvem = () => {
                 </div>
                 <div className="row">
                     <div className="col-md-12 order-md-1">
-                        <BootstrapTable
-                            keyField="_id"
-                            bootstrap4
-                            data={infra.servidores}
-                            columns={columns}
-                            noDataIndication="Sem dados para apresentar!"
-                            hover
-                            cellEdit={cellEditFactory({
-                                mode: 'click',
-                                blurToSave: true,
-                                afterSaveCell:
-                                    (oldValue, newValue, row, column) => {
-                                        if(oldValue !== newValue){
-                                            setAlterou(!alterou)
+                        {(loader) ?
+                            <Loader
+                                type="TailSpin"
+                                color="#00BFFF"
+                                height={100}
+                                width={100}
+                            /> :
+                            <BootstrapTable
+                                keyField="_id"
+                                bootstrap4
+                                data={infra.servidores}
+                                columns={columns}
+                                noDataIndication="Sem dados para apresentar!"
+                                hover
+                                cellEdit={cellEditFactory({
+                                    mode: 'click',
+                                    blurToSave: true,
+                                    afterSaveCell:
+                                        (oldValue, newValue, row, column) => {
+                                            if (oldValue !== newValue) {
+                                                setAlterou(true)
+                                            }
                                         }
-                                    }
-                            })}
-                        />
+                                })}
+                            />
+                        }
                     </div>
                 </div>
                 <div className="row">
-                <div className="col-md-3">
-                        <button 
-                            type="button" 
+                    <div className="col-md-3">
+                        <button
+                            type="button"
                             className="btn btn-info"
                             onClick={cancelarAlteracao}>
                             Cancelar
                         </button>
                     </div>
                     <div className="col-md-3">
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             className="btn btn-success">
                             Salvar
                         </button>

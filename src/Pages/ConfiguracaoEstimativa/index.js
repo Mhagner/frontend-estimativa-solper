@@ -7,10 +7,10 @@ const ConfiguracaoEstimativa = () => {
     const lista = [
         {
             link: "/parametrizacoes",
-            descricao: "parametrizações"
+            descricao: "Parametrizações"
         },
         {
-            descricao: "parametrização das estimativas",
+            descricao: "Parametrização das estimativas",
             current: 'page'
         },
     ]

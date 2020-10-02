@@ -10,25 +10,31 @@ import { calculaTotalManutencao, calculaColuna } from '../../../Utils/metodos'
 import api from '../../../Utils/api'
 
 
+const defaultData = {
+    data: '',
+    ativo: true,
+    servidores: []
+}
+
 
 const Mainternance = ({ setForm, formData, navigation, buttonPrevious, buttonNext }) => {
     const { numeroDaOportunidade, cliente, valorHora, custoInfra, dados } = formData;
 
     const { previous, next } = navigation;
 
-    const [servidores, setServidores] = useState([])
+    const [infra, setInfra] = useState(defaultData)
 
     useEffect(()=>{
         obtenhaServidores()
     }, [])
 
     function obtenhaServidores(){
-        api.get('infra')
+        api.get('infra/5f237bd6e9c53a22a8a9edf9')
         .then(response => {
-            setServidores(response.data)
+            setInfra(response.data)
         })
         .catch(err =>{
-            console.log(err)
+            console.log("Erro ao tentar obter os servidores nuvem!")
         })
     }
 
@@ -66,7 +72,7 @@ const Mainternance = ({ setForm, formData, navigation, buttonPrevious, buttonNex
                             <div className="col-md-6 mb-3">
                                 <Card title="Custo de infraestrutura nuvem">
                                     <div className="col-md-12 mb-3">
-                                        {servidores.map((servidor) => (
+                                        {infra.servidores.map((servidor) => (
                                             <div className="row" key={servidor._id}>
                                                 <RadioButton
                                                     label={`${servidor.instancia} | ${servidor.cpu} | ${servidor.ram} | ${servidor.custo}`}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import react, { useState } from "react";
 
 const useForm = (callback) => {
     const [values, setValues] = useState({})
@@ -17,7 +17,7 @@ const useForm = (callback) => {
         e.preventDefault();
         callback();
     };
-    return [{ values }, setValues, reset, handleChange, handleSubmit];
+    return [{ values }, reset, handleChange, handleSubmit];
 };
 
 export default useForm;

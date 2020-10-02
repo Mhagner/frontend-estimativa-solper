@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: "http://localhost:3003/api/"
+    baseURL: "https://hiringcoders14.vtexcommercestable.com.br/api/"
 });

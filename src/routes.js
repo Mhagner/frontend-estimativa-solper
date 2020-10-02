@@ -12,6 +12,7 @@ import ConfiguracaoEstimativa from './Pages/ConfiguracaoEstimativa'
 import Clientes from './Pages/Clientes'
 import InfraNuvem from './Pages/InfraNuvem'
 import NovoCliente from './Pages/NovoCliente'
+import AlterarCliente from './Pages/AlterarCliente'
 
 function Routes() {
   return (
@@ -31,6 +32,7 @@ function Routes() {
         <Route path="/parametrizacoes/estimativa" component={ConfiguracaoEstimativa} />
         <Route path="/parametrizacoes/clientes" component={Clientes} />
         <Route path="/parametrizacoes/novo-cliente" component={NovoCliente} />
+        <Route path="/parametrizacoes/alterar-cliente/:id" component={AlterarCliente} />
         <Route path="/parametrizacoes/infra-nuvem" component={InfraNuvem} />
       </Switch>
     </BrowserRouter>

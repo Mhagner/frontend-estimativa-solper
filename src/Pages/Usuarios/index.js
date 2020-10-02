@@ -6,10 +6,10 @@ const Usuario = () => {
   const lista = [
     {
       link: "/parametrizacoes",
-      descricao: "parametrizações"
+      descricao: "Parametrizações"
     },
     {
-      descricao: "usuários",
+      descricao: "Usuários",
       current: 'page'
     },
   ]

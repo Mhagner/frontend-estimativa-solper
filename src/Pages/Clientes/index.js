@@ -7,22 +7,26 @@ import Breadcrumb from '../../Components/Breadcrumb'
 import { useHistory } from 'react-router-dom'
 import api from '../../Utils/api'
 import { options } from '../../Components/TableEdite/data'
+import Loader from 'react-loader-spinner'
 import './style.css'
 
 const Clientes = () => {
 
     const [clientes, setClientes] = useState([])
     const [id, setId] = useState(null)
+    const [loader, setLoader] = useState(false)
 
     useEffect(() => {
         getClientes()
     }, [])
 
     function getClientes() {
+        setLoader(true)
         api.get('clientes')
             .then(response => {
                 //console.log(response.data)
                 setClientes(response.data)
+                setLoader(false)
             })
     }
 
@@ -39,7 +43,7 @@ const Clientes = () => {
     const actionFormaterUpdate = () => {
         return (
             <button className='btn btn-default btn-custom'
-                onClick={() => console.log('editar!')}>
+                onClick={() => altereRow(id)}>
                 <i className='fa fa-pencil btn-icon'></i>
             </button>
         );
@@ -62,7 +66,12 @@ const Clientes = () => {
             .catch(error => {
                 console.log("deu ruim!")
             })
+    }
 
+    function altereRow(_id){
+        //console.log(`editar linha id ${_id}`)
+        history.push(`/parametrizacoes/alterar-cliente/${_id}`)
+        localStorage.setItem('@cliente-id', _id)
     }
 
     let history = useHistory()
@@ -148,7 +157,7 @@ const Clientes = () => {
                 <div className="col-md-8 mb-3">
                     <button
                         type="button"
-                        onClick={() => history.push("/parametrizacoes/novo-cliente")}
+                        onClick={(id) => history.push("/parametrizacoes/novo-cliente")}
                         className="btn btn-success">
                         Novo
                     </button>
@@ -156,18 +165,26 @@ const Clientes = () => {
             </div>
             <div className="row">
                 <div className="col-md-12 order-md-1">
-                    <BootstrapTable
-                        keyField="_id"
-                        bootstrap4
-                        data={clientes}
-                        columns={columns}
-                        rowEvents={rowEvents}
-                        filter={filterFactory()}
-                        pagination={paginationFactory(options)}
-                        noDataIndication="Não existe o dado pesquisado!"
-                        striped
-                        hover
-                    />
+                    {(loader) ?
+                        <Loader
+                            type="TailSpin"
+                            color="#00BFFF"
+                            height={100}
+                            width={100}
+                        /> :
+                        <BootstrapTable
+                            keyField="_id"
+                            bootstrap4
+                            data={clientes}
+                            columns={columns}
+                            rowEvents={rowEvents}
+                            filter={filterFactory()}
+                            pagination={paginationFactory(options)}
+                            noDataIndication="Não existe o dado pesquisado!"
+                            striped
+                            hover
+                        />
+                    }
                 </div>
             </div>
             <hr className="featurette-divider" />
