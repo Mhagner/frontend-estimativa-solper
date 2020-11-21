@@ -10,6 +10,7 @@ function Parametrizacoes() {
                 <div className="col-md-2">
                     <Link to="/parametrizacoes/usuarios">
                         <Card
+                            parametrizacao
                             title="Usuários"
                             imagem="https://img.icons8.com/bubbles/100/000000/edit-user.png"
                         />
@@ -18,6 +19,7 @@ function Parametrizacoes() {
                 <div className="col-md-2">
                     <Link to="/parametrizacoes/estimativa">
                         <Card
+                            parametrizacao
                             title="Estimativas"
                             imagem="https://img.icons8.com/bubbles/100/000000/calculator.png"
                         />
@@ -26,6 +28,7 @@ function Parametrizacoes() {
                 <div className="col-md-2">
                     <Link to="/parametrizacoes/clientes">
                         <Card
+                            parametrizacao
                             title="Clientes"
                             imagem="https://img.icons8.com/bubbles/100/000000/organization.png"
                         />
@@ -34,6 +37,7 @@ function Parametrizacoes() {
                 <div className="col-md-2">
                     <Link to="/parametrizacoes/infra-nuvem">
                         <Card
+                            parametrizacao
                             title="Infra Nuvem"
                             imagem="https://img.icons8.com/bubbles/100/000000/cloud-sync.png"
                         />

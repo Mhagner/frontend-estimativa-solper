@@ -4,7 +4,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter'
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import Breadcrumb from '../../Components/Breadcrumb'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import api from '../../Utils/api'
 import { options } from '../../Components/TableEdite/data'
 import Loader from 'react-loader-spinner'
@@ -40,7 +40,16 @@ const Clientes = () => {
         }
     }
 
-    const actionFormaterUpdate = () => {
+    const actionFormaterDetails = () => {
+        return (
+            <Link className='btn btn-default btn-custom'
+            to={`/parametrizacoes/clientes/${id}`}>
+                <i className='fa fa-eye btn-icon'></i>
+            </Link>
+        );
+    }
+
+   /*  const actionFormaterUpdate = () => {
         return (
             <button className='btn btn-default btn-custom'
                 onClick={() => altereRow(id)}>
@@ -56,9 +65,9 @@ const Clientes = () => {
                 <i className='fa fa-trash-o btn-icon'></i>
             </button>
         );
-    }
+    } */
 
-    function deleteRow(_id) {
+    /* function deleteRow(_id) {
         api.delete(`clientes/${_id}`)
             .then(response => {
                 getClientes()
@@ -66,13 +75,15 @@ const Clientes = () => {
             .catch(error => {
                 console.log("deu ruim!")
             })
-    }
+    } */
 
-    function altereRow(_id){
+   /*  function altereRow(_id){
         //console.log(`editar linha id ${_id}`)
         history.push(`/parametrizacoes/alterar-cliente/${_id}`)
         localStorage.setItem('@cliente-id', _id)
-    }
+    } */
+
+   
 
     let history = useHistory()
 
@@ -106,7 +117,7 @@ const Clientes = () => {
                 return { width: "20%" };
             }
         },
-        {
+       /*  {
             dataField: 'tipo',
             text: 'Tipo',
             filter: textFilter(),
@@ -121,8 +132,18 @@ const Clientes = () => {
             headerStyle: () => {
                 return { width: "16%" };
             }
-        },
+        } */
         {
+            isDummyField: false,
+            formatter: actionFormaterDetails,
+            editable: false,
+            formatExtraData: { id },
+            headerStyle: () => {
+                return { width: "5%" };
+            },
+            align: 'center'
+        }
+       /*  {
             isDummyField: false,
             formatter: actionFormaterUpdate,
             editable: false,
@@ -141,7 +162,7 @@ const Clientes = () => {
                 return { width: "5%" };
             },
             align: 'center'
-        }
+        } */
     ]
 
     return (
@@ -164,7 +185,7 @@ const Clientes = () => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-12 order-md-1">
+                <div className="col-md-8 order-md-1">
                     {(loader) ?
                         <Loader
                             type="TailSpin"

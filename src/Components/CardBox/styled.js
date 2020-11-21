@@ -5,7 +5,12 @@ export const CardContainer = styled.div`
     height: 120px;
     margin-left: 16px;
     padding-left: 18px;
-    border-radius: 8px;
+    border-radius: 3px;
+    box-shadow: 0 1.5rem 4rem rgba(black, .15);
+    transition: transform .3s;
+    &:hover {
+        transform: translateY(-1.2rem) scale(1.1);
+    }
 `
 
 export const CardTitle = styled.p`
