@@ -49,42 +49,6 @@ const Clientes = () => {
         );
     }
 
-   /*  const actionFormaterUpdate = () => {
-        return (
-            <button className='btn btn-default btn-custom'
-                onClick={() => altereRow(id)}>
-                <i className='fa fa-pencil btn-icon'></i>
-            </button>
-        );
-    }
-
-    const actionFormaterDelete = () => {
-        return (
-            <button className='btn btn-default btn-custom'
-                onClick={() => deleteRow(id)}>
-                <i className='fa fa-trash-o btn-icon'></i>
-            </button>
-        );
-    } */
-
-    /* function deleteRow(_id) {
-        api.delete(`clientes/${_id}`)
-            .then(response => {
-                getClientes()
-            })
-            .catch(error => {
-                console.log("deu ruim!")
-            })
-    } */
-
-   /*  function altereRow(_id){
-        //console.log(`editar linha id ${_id}`)
-        history.push(`/parametrizacoes/alterar-cliente/${_id}`)
-        localStorage.setItem('@cliente-id', _id)
-    } */
-
-   
-
     let history = useHistory()
 
     const lista = [
@@ -117,22 +81,7 @@ const Clientes = () => {
                 return { width: "20%" };
             }
         },
-       /*  {
-            dataField: 'tipo',
-            text: 'Tipo',
-            filter: textFilter(),
-            headerStyle: () => {
-
-                return { width: "16%" };
-            }
-        },
-        {
-            dataField: 'colaboradores',
-            text: 'Qtde de colaboradores',
-            headerStyle: () => {
-                return { width: "16%" };
-            }
-        } */
+    
         {
             isDummyField: false,
             formatter: actionFormaterDetails,
@@ -143,26 +92,6 @@ const Clientes = () => {
             },
             align: 'center'
         }
-       /*  {
-            isDummyField: false,
-            formatter: actionFormaterUpdate,
-            editable: false,
-            formatExtraData: { id },
-            headerStyle: () => {
-                return { width: "5%" };
-            },
-            align: 'center'
-        },
-        {
-            isDummyField: false,
-            formatter: actionFormaterDelete,
-            editable: false,
-            formatExtraData: { id },
-            headerStyle: () => {
-                return { width: "5%" };
-            },
-            align: 'center'
-        } */
     ]
 
     return (
@@ -185,7 +114,7 @@ const Clientes = () => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-8 order-md-1">
+                <div className="col-md-6 order-md-1">
                     {(loader) ?
                         <Loader
                             type="TailSpin"

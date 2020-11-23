@@ -4,17 +4,24 @@ import Breadcrumb from '../../Components/Breadcrumb'
 import ItemForm from '../../Components/ItemForm'
 import Combobox from '../../Components/Combobox'
 import { tipos } from '../../Utils/mocks/mockTipos'
-import { useHistory } from 'react-router-dom'
-import useForm from '../../Utils/hooks/useForm'
+import { useHistory, useParams, Link } from 'react-router-dom'
 import api from '../../Utils/api'
 
+
+
 const AlterarCliente = () => {
-    const [{ values }, reset, handleChange, handleSubmit] = useForm();
-    const [id, setId] = useState(null);
+
+    const [descricao, setDescricao] = useState('')
+    const [tipo, setTipo] = useState('')
+    const [colaboradores, setColaboradores] = useState(0)
+
+    let { id } = useParams()
+
+    useEffect(() => {
+        getCliente()
+    }, [])
 
     let history = useHistory()
-
-    //console.log(getId)
 
     const lista = [
         {
@@ -26,32 +33,62 @@ const AlterarCliente = () => {
             descricao: "Clientes"
         },
         {
+            link: `/parametrizacoes/clientes/${id}`,
+            descricao: `${descricao}`
+        },
+        {
             descricao: "Alterar cliente",
             current: 'page',
             ativo: "active"
         },
     ]
 
-    function alterarCliente(e, id) {
-        api.put(`clientes/${id}`, values)
+    function getCliente() {
+        api.get(`clientes/${id}`)
             .then(response => {
-                reset()
-                history.push('/parametrizacoes/clientes')
+                setDescricao(response.data.descricao)
+                setTipo(response.data.tipo)
+                setColaboradores(response.data.colaboradores)
             })
-            .catch(response => {
-                console.log("Cliente já cadastrado na base!")
+            .catch(error => {
+                console.log(error)
             })
     }
 
-    function obterCliente(id) {
-        api.get(`clientes/${id}`)
+    function alterarCliente(value){
+        api.put(`clientes/${id}`, value)
             .then(response => {
-                console.log(response.data)
+                history.push("/parametrizacoes/clientes")
             })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    function submeterParaAlteracao(e) {
+        const novaAlteracao = {
+            descricao: descricao,
+            tipo: tipo,
+            colaboradores: colaboradores
+        }
+        alterarCliente(novaAlteracao)
+        //AlterarCliente(id)
+        e.preventDefault()
+    }
+
+    function handleDescricaoChange(e){
+        setDescricao(e.target.value)
+    }
+
+    function handleTipoChange(e){
+        setTipo(e.target.value)
+    }
+
+    function handleColaboradoresChange(e){
+        setColaboradores(e.target.value)
     }
 
     function cancelarCadastro() {
-        reset()
         history.push('/parametrizacoes/clientes')
     }
 
@@ -67,14 +104,15 @@ const AlterarCliente = () => {
             <div className="form">
                 <div className="row">
                     <div className="col-md-10 order-md-1">
-                        <form onSubmit={handleSubmit(alterarCliente)}>
+                        <form onSubmit={submeterParaAlteracao}>
                             <div className="row">
                                 <div className="col-md-4 mb-3">
                                     <ItemForm
                                         label="Descrição"
                                         name="descricao"
                                         type="text"
-                                        onChange={handleChange}
+                                        value={descricao}
+                                        onChange={handleDescricaoChange}
                                     />
                                 </div>
 
@@ -83,7 +121,8 @@ const AlterarCliente = () => {
                                         label="Tipo"
                                         name="tipo"
                                         lista={tipos}
-                                        onChange={handleChange}
+                                        value={tipo}
+                                        onChange={handleTipoChange}
                                     />
                                 </div>
 
@@ -92,7 +131,8 @@ const AlterarCliente = () => {
                                         label="Qtde Colaboradores"
                                         name="colaboradores"
                                         type="number"
-                                        onChange={handleChange}
+                                        value={colaboradores}
+                                        onChange={handleColaboradoresChange}
                                     />
                                 </div>
 

@@ -30,7 +30,7 @@ const columns = [
         text: 'Cliente',
         filter: textFilter(),
         headerStyle: () => {
-            
+
             return { width: "10%" };
         }
     },
@@ -46,18 +46,20 @@ const columns = [
 function Estimativas() {
     return (
         <Main titlePage="Estimativas Realizadas">
-            <BootstrapTable
-                keyField="idEstimativa"
-                bootstrap4
-                data={estimativas}
-                columns={columns}
-                filter={filterFactory()}
-                pagination={paginationFactory(options)}
-                noDataIndication="Não existe o dado pesquisado!"
-                striped
-                hover
-            />
-        </Main>
+            <div className="col-md-8 order-md-1">
+                <BootstrapTable
+                    keyField="idEstimativa"
+                    bootstrap4
+                    data={estimativas}
+                    columns={columns}
+                    filter={filterFactory()}
+                    pagination={paginationFactory(options)}
+                    noDataIndication="Não existe o dado pesquisado!"
+                    striped
+                    hover
+                />
+            </div>
+        </Main >
     )
 }
 

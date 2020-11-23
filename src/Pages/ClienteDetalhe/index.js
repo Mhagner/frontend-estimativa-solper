@@ -15,7 +15,7 @@ const ClienteDetalhe = () => {
 
     useEffect(() => {
         getCliente()
-    })
+    },[])
 
     const lista = [
         {
