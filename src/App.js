@@ -1,5 +1,5 @@
 import React from 'react'
-import './dashboard.css'
+import './dashboard.scss'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 import Routes from './routes'

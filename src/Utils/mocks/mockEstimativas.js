@@ -1,6 +1,6 @@
-export const estimativas = [
+export const estimativasData = [
     {
-        idEstimativa: 1,
+        id: 1,
         responsavelEscopo: "",
         responsavelEstimativa: "",
         data:"14/07/2020",
@@ -25,7 +25,7 @@ export const estimativas = [
         dados: []
     },
     {
-        idEstimativa: 2,
+        id: 2,
         responsavelEscopo: "",
         responsavelEstimativa: "",
         data:"14/07/2020",
@@ -50,7 +50,7 @@ export const estimativas = [
         dados: []
     },
     {
-        idEstimativa: 3,
+        id: 3,
         responsavelEscopo: "",
         responsavelEstimativa: "",
         data:"14/07/2020",
@@ -75,7 +75,7 @@ export const estimativas = [
         dados: []
     },
     {
-        idEstimativa: 4,
+        id: 4,
         responsavelEscopo: "",
         responsavelEstimativa: "",
         data:"14/07/2020",
@@ -100,7 +100,7 @@ export const estimativas = [
         dados: []
     },
     {
-        idEstimativa: 5,
+        id: 5,
         responsavelEscopo: "",
         responsavelEstimativa: "",
         data:"14/07/2020",
@@ -125,7 +125,7 @@ export const estimativas = [
         dados: []
     },
     {
-        idEstimativa: 6,
+        id: 6,
         responsavelEscopo: "",
         responsavelEstimativa: "",
         data:"14/07/2020",
@@ -150,7 +150,7 @@ export const estimativas = [
         dados: []
     },
     {
-        idEstimativa: 7,
+        id: 7,
         responsavelEscopo: "",
         responsavelEstimativa: "",
         data:"14/07/2020",

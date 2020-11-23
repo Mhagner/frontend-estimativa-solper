@@ -14,6 +14,8 @@ import InfraNuvem from './Pages/InfraNuvem'
 import NovoCliente from './Pages/NovoCliente'
 import AlterarCliente from './Pages/AlterarCliente'
 import ClienteDetalhe from './Pages/ClienteDetalhe'
+import AlterarEstimativa from './Pages/AlterarEstimativa'
+import EstimativaDetalhe from './Pages/EstimativaDetalhe'
 
 function Routes() {
   return (
@@ -21,7 +23,7 @@ function Routes() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/nova-estimativa" component={NovaEstimativa} />
-        <Route path="/estimativas" component={Estimativas} />
+        <Route exact path="/estimativas" component={Estimativas} />
         <Route path="/tipos-solucao" component={TiposSolucao} />
         <Route path="/base-conhecimento" component={BaseConhecimento} />
         <Route path="/escopo-office-online" component={() => {
@@ -36,6 +38,8 @@ function Routes() {
         <Route path="/parametrizacoes/novo-cliente" component={NovoCliente} />
         <Route path="/parametrizacoes/clientes/alterar-cliente/:id" component={AlterarCliente} />
         <Route path="/parametrizacoes/infra-nuvem" component={InfraNuvem} />
+        <Route exact path="/estimativas/:id" component={EstimativaDetalhe} />
+        <Route exact path="/estimativas/alterar-estimativa/:id" component={AlterarEstimativa} />
       </Switch>
     </BrowserRouter>
   )

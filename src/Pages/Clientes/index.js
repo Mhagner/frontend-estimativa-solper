@@ -8,7 +8,7 @@ import { useHistory, Link } from 'react-router-dom'
 import api from '../../Utils/api'
 import { options } from '../../Components/TableEdite/data'
 import Loader from 'react-loader-spinner'
-import './style.css'
+import '../../Utils/styles.scss'
 
 const Clientes = () => {
 

@@ -5,19 +5,18 @@ import CardForm from '../../Components/CardForm'
 import { useParams, useHistory, Link } from 'react-router-dom'
 import api from '../../Utils/api'
 
-const ClienteDetalhe = () => {
+const EstimativaDetalhe = () => {
 
     const [details, setDetails] = useState('')
 
     let history = useHistory()
     let { id } = useParams()
-    // let match = match()
 
-    useEffect(() => {
+   /*  useEffect(() => {
         getCliente()
-    },[])
+    },[]) */
 
-    const lista = [
+   /*  const lista = [
         {
             link: "/parametrizacoes",
             descricao: "Parametrizações"
@@ -31,9 +30,9 @@ const ClienteDetalhe = () => {
             current: 'page',
             ativo: "active"
         },
-    ]
+    ] */
 
-    function getCliente() {
+    /* function getCliente() {
         api.get(`clientes/${id}`)
             .then(response => {
                 setDetails(response.data)
@@ -51,33 +50,33 @@ const ClienteDetalhe = () => {
             .catch(error => {
                 console.log("deu ruim!")
             })
-    }
+    } */
 
     function voltar() {
-        history.push('/parametrizacoes/clientes')
+        history.push('/estimativas')
     }
 
     function alterar(){
-        return `/parametrizacoes/clientes/alterar-cliente/${details._id}`
+        return `/estimativas/alterar-estimativa/${details.id}`
     }
 
     return (
         <Main titlePage="Detalhe">
             <CardForm>
-                <div className="row">
+                {/* <div className="row">
                     <div className="col-md-6">
                         <Breadcrumb
                             lista={lista}
                         />
                     </div>
-                </div>
+                </div> */}
                 <div className="form">
                     <div className="row">
                         <div className="col-md-10 order-md-1">
                             <form>
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div class="jumbotron">
+                                        {/* <div class="jumbotron">
                                             <dl class="row">
                                                 <dt class="col-sm-3">Cliente</dt>
                                                 <dd class="col-sm-9">{details.descricao}</dd>
@@ -88,7 +87,7 @@ const ClienteDetalhe = () => {
                                                 <dt class="col-sm-3">Colaboradores</dt>
                                                 <dd class="col-sm-9">{details.colaboradores}</dd>
                                             </dl>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                                 <div className="row">
@@ -107,14 +106,14 @@ const ClienteDetalhe = () => {
                                             Editar
                                         </Link>
                                     </div>
-                                    {/* <div className="col-md-2">
+                                    <div className="col-md-2">
                                         <button
                                             type="button"
-                                            onClick={() => deleteCliente(id)}
+                                            
                                             className="btn btn-danger">
                                             Excluir
                                         </button>
-                                    </div> */}
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -128,4 +127,4 @@ const ClienteDetalhe = () => {
 };
 
 
-export default ClienteDetalhe;
+export default EstimativaDetalhe;
