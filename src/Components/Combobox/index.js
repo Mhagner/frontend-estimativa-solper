@@ -6,7 +6,7 @@ const Combobox = ({ label, lista, ...outherProps }) => (
             <label>{label}</label>
             <select className="form-control" {...outherProps}>
                 {lista.map((item) => (
-                    <option value={item._id}>
+                    <option value={item.descricao}>
                         {item.descricao}
                     </option>
                 ))}

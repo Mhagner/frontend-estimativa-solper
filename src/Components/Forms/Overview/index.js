@@ -6,6 +6,9 @@ import CardForm from '../../CardForm'
 import Card from '../../Card'
 import ItemForm from '../../ItemForm'
 import { calculaTotalManutencao, calculaColuna } from '../../../Utils/metodos'
+import { useHistory, useParams, Link } from 'react-router-dom'
+import api from '../../../Utils/api'
+
 
 const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
     const {
@@ -30,15 +33,32 @@ const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
 
     const { previous } = navigation;
 
+    const history = useHistory()
 
     const totalManutenção = calculaTotalManutencao(dados, calculaColuna, valorHora, 0.01)
+    
+    function salvar(estimativa){
+        api.post('estimativas', estimativa)
+            .then(response => {
+                history.push("/estimativas")
+            })
+            .catch(error =>{
+                console.log("Deu ruim!")
+            })
+    }
+
+    function submeterEstimativa(e){
+        const dados = formData
+        salvar(dados)
+        e.preventDefault()
+    }
 
     return (
         <div className="form">
             <div className="row">
                 <div className="col-md-12 order-md-1">
                     <CardForm titleCard={`Resumo da estimativa - OPP: ${numeroDaOportunidade} - ${cliente}`}>
-                        <form className="needs-validation">
+                        <form className="needs-validation" onSubmit={submeterEstimativa}>
                             <div className="row">
                                 <div className="col-md-6 mb-3">
                                     <TableResume
@@ -90,7 +110,7 @@ const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
                                     <Card>
                                         <div className="row">
                                             <div className="col-md-6 mb-4">
-                                                <button type="button" className="btn btn-success btn-block">Salvar</button>
+                                                <button type="submit" className="btn btn-success btn-block">Salvar</button>
                                             </div>
                                             <div className="col-md-6 mb-4">
                                                 <button type="button" className="btn btn-primary btn-block">Exportar</button>

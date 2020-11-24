@@ -18,6 +18,8 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
 
     const [clientes, setClientes] = useState([])
 
+    const { next } = navigation;
+
     useEffect(() => {
         api.get('clientes')
             .then(response => {
@@ -25,7 +27,17 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
             })
     }, [])
 
-    const { next } = navigation;
+    function validaPreenchimento(e) {
+        e.preventDefault()
+        if (responsavelEscopo === "" ||
+            responsavelEstimativa === "" ||
+            numeroDaOportunidade === "" ||
+            cliente === "" ||
+            descricaoDaOportunidade === "") {
+            return console.log("Precisa preencher os campos!")
+        }
+        next()
+    }
 
     return (
         <div className="form">
@@ -99,7 +111,7 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
                                 <div className="btn-group col-md-12 mb-1">
                                     <button
                                         className={`btn btn-${buttonNext}`}
-                                        onClick={next}>
+                                        onClick={validaPreenchimento}>
                                         Próximo
                                     </button>
                                 </div>

@@ -12,9 +12,9 @@ const EstimativaDetalhe = () => {
     let history = useHistory()
     let { id } = useParams()
 
-   /*  useEffect(() => {
-        getCliente()
-    },[]) */
+    useEffect(() => {
+        getEstimativa()
+    },[])
 
    /*  const lista = [
         {
@@ -32,25 +32,26 @@ const EstimativaDetalhe = () => {
         },
     ] */
 
-    /* function getCliente() {
-        api.get(`clientes/${id}`)
+    function getEstimativa() {
+        api.get(`estimativas/${id}`)
             .then(response => {
-                setDetails(response.data)
+                console.log(response.data)
             })
             .catch(error => {
                 console.log(error)
             })
     }
 
-    function deleteCliente(id) {
-        api.delete(`clientes/${id}`)
+    function deleteEstimativa(id) {
+        api.delete(`estimativas/${id}`)
             .then(response => {
-                history.push("/parametrizacoes/clientes")
+                //console.log("foi!")
+                history.push("/estimativas")
             })
             .catch(error => {
-                console.log("deu ruim!")
+                console.log(error)
             })
-    } */
+    }
 
     function voltar() {
         history.push('/estimativas')
@@ -109,7 +110,7 @@ const EstimativaDetalhe = () => {
                                     <div className="col-md-2">
                                         <button
                                             type="button"
-                                            
+                                            onClick={() => deleteEstimativa(id)}
                                             className="btn btn-danger">
                                             Excluir
                                         </button>

@@ -5,7 +5,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import { Link, useParams } from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 
-import { estimativasData } from '../../Utils/mocks/mockEstimativas'
+import api from '../../Utils/api'
 import { options } from '../../Components/TableEdite/data'
 import Main from '../../Components/Main'
 import '../../Utils/styles.scss'
@@ -24,22 +24,21 @@ function Estimativas() {
 
     function getEstimativas() {
         setLoader(true)
-        setEstimativas(estimativasData)
-        /* api.get('clientes')
+        //setEstimativas(estimativasData)
+        api.get('estimativas')
             .then(response => {
-                //console.log(response.data)
-                setClientes(response.data)
+                setEstimativas(response.data)
                 setLoader(false)
-            }) */
+            })
     }
 
     const rowEvents = {
         onClick: (e, row, rowIndex) => {
-            setId(row.id)
+            setId(row._id)
             //console.log(id)
         },
         onMouseEnter: (e, row, rowIndex) => {
-            setId(row.id)
+            setId(row._id)
         }
     }
 
@@ -54,7 +53,7 @@ function Estimativas() {
 
     const columns = [
         {
-            dataField: 'id',
+            dataField: '_id',
             text: 'Item',
             headerStyle: () => {
                 return { width: "4%" };
@@ -87,6 +86,15 @@ function Estimativas() {
             }
         },
         {
+            dataField: 'data',
+            text: 'Data',
+            //filter: textFilter(),
+            headerStyle: () => {
+
+                return { width: "10%" };
+            }
+        },
+        {
             isDummyField: false,
             formatter: actionFormaterDetails,
             editable: false,
@@ -101,19 +109,27 @@ function Estimativas() {
 
     return (
         <Main titlePage="Estimativas Realizadas">
-            <div className="col-md-8 order-md-1">
-                <BootstrapTable
-                    keyField="idEstimativa"
-                    bootstrap4
-                    data={estimativas}
-                    columns={columns}
-                    rowEvents={rowEvents}
-                    filter={filterFactory()}
-                    pagination={paginationFactory(options)}
-                    noDataIndication="Não existe o dado pesquisado!"
-                    striped
-                    hover
-                />
+            <div className="col-md-10 order-md-1">
+                {(loader) ?
+                    <Loader
+                        type="TailSpin"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                    /> :
+                    <BootstrapTable
+                        keyField="idEstimativa"
+                        bootstrap4
+                        data={estimativas}
+                        columns={columns}
+                        rowEvents={rowEvents}
+                        filter={filterFactory()}
+                        pagination={paginationFactory(options)}
+                        noDataIndication="Não existe o dado pesquisado!"
+                        striped
+                        hover
+                    />
+                }
             </div>
         </Main >
     )

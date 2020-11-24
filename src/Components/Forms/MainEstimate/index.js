@@ -116,6 +116,13 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         history.push('/nova-estimativa')
     }
 
+    function validaPreenchimento(e) {
+        if (dados.length < 1) {
+            return console.log("Precisa preencher os campos!")
+        }
+        next()
+    }
+
     const percentRetrabalho = 0.10
 
     let retRequisito = sumRequisito * percentRetrabalho
@@ -339,7 +346,7 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
                                 colorPrevious={buttonPrevious}
                                 colorNext={buttonNext}
                                 funcPrevious={previous}
-                                funcNext={next}
+                                funcNext={() => validaPreenchimento()}
                                 buttonPrevious="Voltar"
                                 buttonNext="Próximo"
                             />
