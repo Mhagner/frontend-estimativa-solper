@@ -6,7 +6,7 @@ import CardForm from '../../CardForm'
 import Card from '../../Card'
 import ItemForm from '../../ItemForm'
 import { calculaTotalManutencao, calculaColuna } from '../../../Utils/metodos'
-import { useHistory, useParams, Link } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import api from '../../../Utils/api'
 
 
@@ -113,7 +113,7 @@ const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
                                                 <button type="submit" className="btn btn-success btn-block">Salvar</button>
                                             </div>
                                             <div className="col-md-6 mb-4">
-                                                <button type="button" className="btn btn-primary btn-block">Exportar</button>
+                                                <Link to={'/estimativas'} className="btn btn-secondary btn-block">Cancelar</Link>
                                             </div>
                                         </div>
                                         {/*  <div className="row">

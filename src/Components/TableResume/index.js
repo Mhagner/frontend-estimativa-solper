@@ -10,13 +10,19 @@ const TableResume = ({ dados, dadosResumo, homologacao, posGoLive, treinamento, 
         let dev = calculaColuna(dados, 'sumDesenvolvimento') || 0;
         let teste = calculaColuna(dados, 'sumTeste') || 0;
 
+        //Requisito
         dadosResumo[0].horas = calculaColuna(dados, 'sumRequisito') || 0;
+        //Implementação e testes
         dadosResumo[1].horas = dev + teste + parseInt(horasLider) + parseInt(reuniaoLider)
             + parseInt(apropriacaoTime) + parseInt(reunioesDiaria) + parseInt(gcs)
             + parseInt(preparacaoAmbiente) + parseInt(elaboracaoEscopo)
+        //Homologação
         dadosResumo[2].horas = parseInt(homologacao)
+        //Pós GO-live
         dadosResumo[3].horas = parseInt(posGoLive)
+        //Treinamento
         dadosResumo[4].horas = parseInt(treinamento)
+        //Total
         dadosResumo[5].horas = (dadosResumo[0].horas + dadosResumo[1].horas + dadosResumo[2].horas
             + dadosResumo[3].horas + dadosResumo[4].horas) * 0.20
     }

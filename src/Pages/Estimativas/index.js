@@ -81,6 +81,7 @@ function Estimativas() {
         {
             dataField: 'descricaoDaOportunidade',
             text: 'Descrição da oportunidade',
+            filter: textFilter(),
             headerStyle: () => {
                 return { width: "30%" };
             }
@@ -88,7 +89,7 @@ function Estimativas() {
         {
             dataField: 'data',
             text: 'Data',
-            //filter: textFilter(),
+            filter: textFilter(),
             headerStyle: () => {
 
                 return { width: "10%" };

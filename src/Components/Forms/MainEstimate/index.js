@@ -23,6 +23,8 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         dados
     } = formData;
 
+    //console.log(dados)
+
     const [sumRequisito, setSumRequisito] = useState(requisito)
     const [sumDesenvolvimento, setSumDesenvolvimento] = useState(0)
     const [sumTestes, setSumTestes] = useState(0)
@@ -122,6 +124,8 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         }
         next()
     }
+
+    console.log(dados.length)
 
     const percentRetrabalho = 0.10
 
