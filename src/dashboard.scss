@@ -120,5 +120,39 @@ body {
   font-size: 1rem;
   color: #8b949c;
   padding-bottom: 1.5rem;
+  //padding-left: 2rem;
   text-transform: uppercase;
 }
+
+.text-left {
+  padding-left: 2rem
+}
+
+.row-color-total {
+  background-color: orange;
+}
+
+$color-primary: rgb(228, 154, 17);
+$color-secondary: rgb(247, 194, 95);
+
+.row-color-total {
+  background-color: $color-primary
+}
+
+.row-color {
+  background-color: $color-secondary
+}
+
+.text-total {
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  padding-top: 2rem;
+}
+
+.blue{
+  color: #5631bb;
+}
+.dark-blue{
+  color: rgb(6, 6, 80);
+}
+

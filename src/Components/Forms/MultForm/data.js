@@ -38,19 +38,19 @@ export const defaultData = {
     treinamento: 0,
     gp: 0,
     valorHora: 0,
-    custoInfra: "",
+    custoInfra: "0",
     dados: [],
     dadosResumo: [
         {
-            atividades: 'Especificação técnica',
+            atividades: 'Elaboração da especificação técnica',
             horas: 0
         },
         {
-            atividades: 'Implementação e testes',
+            atividades: 'Desenvolvimento e testes',
             horas: 0
         },
         {
-            atividades: 'Implantação/homologação',
+            atividades: 'Suporte a implantação/homologação',
             horas: 0
         },
         {

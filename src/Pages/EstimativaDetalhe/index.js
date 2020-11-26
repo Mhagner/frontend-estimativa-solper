@@ -9,12 +9,20 @@ import CardForm from '../../Components/CardForm'
 import { useParams, useHistory, Link } from 'react-router-dom'
 import api from '../../Utils/api'
 import Loader from 'react-loader-spinner'
+import { columns } from './data'
 
 const EstimativaDetalhe = () => {
 
     const [details, setDetails] = useState('')
     const [totalOutrasEstimativas, setTotalOutrasEstimativas] = useState(0)
     const [dados, setDados] = useState([])
+    const [sumRequisito, setSumRequisito] = useState(0)
+    const [sumDesenvolvimento, setSumDesenvolvimento] = useState(0)
+    const [sumTestes, setSumTestes] = useState(0)
+    const [sumTotal, setSumTotal] = useState(0)
+    const [percentualRetrabalhoRequisito, setPercentualRetrabalhoRequisito] = useState(0.10)
+    const [percentualRetrabalhoDesenvolvimento, setPercentualRetrabalhoDesenvolvimento] = useState(0.10)
+    const [percentualRetrabalhoTestes, setPercentualRetrabalhoTestes] = useState(0.10)
 
     let history = useHistory()
     let { id } = useParams()
@@ -23,8 +31,6 @@ const EstimativaDetalhe = () => {
         getEstimativa()
 
     }, [])
-
-    //console.log(details.dados.lenght)
 
     const lista = [
         {
@@ -38,12 +44,17 @@ const EstimativaDetalhe = () => {
             ativo: "active"
         },
     ]
+    //console.log(details.dados.lenght)
 
     function getEstimativa() {
         api.get(`estimativas/${id}`)
             .then(response => {
                 setDetails(response.data)
                 setDados(response.data.dados)
+                setSumRequisito(load(response.data.dados, 'requisito'))
+                setSumDesenvolvimento(load(response.data.dados, 'desenvolvimento'))
+                setSumTestes(load(response.data.dados, 'testes'))
+                setSumTotal(load(response.data.dados, 'total'))
             })
             .catch(error => {
                 console.log(error)
@@ -61,7 +72,7 @@ const EstimativaDetalhe = () => {
             })
     }
 
-    function gerarImpressao(){
+    function gerarImpressao() {
         window.print()
     }
 
@@ -71,6 +82,14 @@ const EstimativaDetalhe = () => {
 
     function alterar() {
         return `/estimativas/alterar-estimativa/${details.id}`
+    }
+
+    function load(dados, item) {
+        const req = dados.map(req => (
+            req[item]
+        ))
+        const sumDado = req.reduce((acc, item) => acc + item, 0)
+        return sumDado
     }
 
     const {
@@ -93,86 +112,23 @@ const EstimativaDetalhe = () => {
         reunioesDiaria
     } = details
 
-    const columns = [{
-        dataField: 'id',
-        text: 'id',
-        headerStyle: () => {
-            return { width: "6%" };
-        },
-        align: "center",
-        hidden: true
-    }, {
-        dataField: 'item',
-        text: 'Item',
-        type: 'number',
-        headerStyle: () => {
-            return { width: "6%" };
-        },
-        align: "center"
-    }, {
-        dataField: 'descricao',
-        text: 'Descrição',
-        headerStyle: () => {
-            return { width: "30%" };
-        }
-    },
-    {
-        dataField: 'tipo',
-        text: 'Tipo',
-        headerStyle: () => {
-            return { width: "30%" };
-        }
-    }, {
-        dataField: 'requisito',
-        text: 'Requisito',
-        headerStyle: () => {
-            return { width: "10%" };
-        },
-        align: "center",
-        type: 'number'
-    }, {
-        dataField: 'desenvolvimento',
-        text: 'Desenv.',
-        headerStyle: () => {
-            return { width: "10%" };
-        },
-        align: "center",
-        type: 'number'
-    }, {
-        dataField: 'testes',
-        text: 'Testes',
-        headerStyle: () => {
-            return { width: "10%" };
-        },
-        align: "center",
-        type: 'number'
-    }, {
-        dataField: 'total',
-        text: 'Total',
-        headerStyle: () => {
-            return { width: "10%" };
-        },
-        align: "center",
-        type: 'number'
-    }];
-
-    const options = {
-        sizePerPage: 4,
-        sizePerPageList: [
-            {
-                text: '4', value: 4
-            },
-            {
-                text: '6', value: 6
-            }, {
-                text: '10', value: 10
-            }]
-    }
+    const retrabalhoRequisito = sumRequisito * percentualRetrabalhoRequisito
+    const retrabalhoDesenvolvimento = sumDesenvolvimento * percentualRetrabalhoDesenvolvimento
+    const retrabalhoTestes = sumTestes * percentualRetrabalhoTestes
+    const retrabalhoTotal = retrabalhoRequisito + retrabalhoDesenvolvimento + retrabalhoTestes
+    const totalGeralPrincipal = sumTotal + retrabalhoTotal
+    const totalGeralOutras = gcs + preparacaoAmbiente + homologacao + posGoLive + elaboracaoEscopo + 
+            treinamento + horasLider + reuniaoLider + apropriacaoTime + reunioesDiaria
+    const gp = (totalGeralPrincipal + totalGeralOutras) * 0.2
+    const totalDevTestes = gcs + preparacaoAmbiente + elaboracaoEscopo + reunioesDiaria + horasLider + 
+            reuniaoLider + apropriacaoTime + sumDesenvolvimento + sumTestes + retrabalhoDesenvolvimento + 
+            retrabalhoTestes
+    const totalGeral = totalGeralPrincipal + totalGeralOutras + gp
 
     return (
 
         <Main titlePage="Detalhes da estimativa">
-            <CardForm titleCard={`${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}>
+            <CardForm titleCard={`Estimativa - ${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}>
                 <div className="row">
                     <div className="col-md-6">
                         <Breadcrumb
@@ -189,104 +145,127 @@ const EstimativaDetalhe = () => {
                                         <div class="jumbotron">
                                             {/* Informações da oportunidade */}
                                             <dl class="row">
-                                                <dt className="text_details">Oportunidade</dt>
+                                                <dt className="col-sm-6 text_details">Oportunidade</dt>
                                             </dl>
                                             <dl class="row">
-                                                <dt className="col-sm-3">Data:</dt>
+                                                <dt className="col-sm-3 text-left">Data:</dt>
                                                 <dd class="col-sm-3">{data}</dd>
                                             </dl>
                                             <dl class="row">
-                                                <dt class="col-sm-3">Oportunidade:</dt>
+                                                <dt class="col-sm-3 text-left">Oportunidade:</dt>
                                                 <dd class="col-sm-9">{`${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}</dd>
                                             </dl>
                                             <dl class="row">
-                                                <dt class="col-sm-3">Resp. escopo:</dt>
+                                                <dt class="col-sm-3 text-left">Resp. escopo:</dt>
                                                 <dd class="col-sm-3">{responsavelEscopo}</dd>
-                                                <dt class="col-sm-3">Resp. estimativa:</dt>
+                                                <dt class="col-sm-3 text-left">Resp. estimativa:</dt>
                                                 <dd class="col-sm-3">{responsavelEstimativa}</dd>
                                             </dl>
                                             <hr className="featurette-divider" />
                                             {/* Estimativa Principal */}
                                             <dl class="row">
-                                                <dt className="text_details">Estimativa Principal</dt>
+                                                <dt className="col-sm-6 text_details">Estimativa Principal</dt>
                                             </dl>
                                             <div className="col-md-12 mb-3">
                                                 <BootstrapTable
                                                     keyField="id"
+                                                    wrapperClasses="borda"
                                                     bootstrap4
                                                     data={dados}
                                                     columns={columns}
-                                                    //rowEvents={rowEvents}
-                                                    //hover
                                                     striped
-                                                    pagination={paginationFactory(options)}
-                                                //cellEdit={null}
                                                 />
                                             </div>
-                                            <hr className="featurette-divider" />
-                                            {/* Demais estimativas */}
                                             <dl class="row">
-                                                <dt className="text_details">Outras atividades</dt>
+                                                <dt className="col-sm-4 text-left">Retrabalho requisito</dt>
+                                                <dd class="col-sm-3">{retrabalhoRequisito.toFixed(2)} horas</dd>
                                             </dl>
                                             <dl class="row">
-                                                <dt class="col-sm-3">GCS</dt>
+                                                <dt className="col-sm-4 text-left">Retrabalho desenvolvimento</dt>
+                                                <dd class="col-sm-3">{retrabalhoDesenvolvimento.toFixed(2)} horas</dd>
+                                            </dl>
+                                            <dl class="row">
+                                                <dt className="col-sm-4 text-left">Retrabalho testes</dt>
+                                                <dd class="col-sm-3">{retrabalhoTestes.toFixed(2)} horas</dd>
+                                            </dl>
+                                            <dl class="row">
+                                                <dt className="col-sm-4 text-left text-total--blue">Total</dt>
+                                                <dt class="col-sm-3 text-total--blue">{totalGeralPrincipal} horas</dt>
+                                            </dl>
+                                            <hr className="featurette-divider" />
+
+                                            {/* Demais estimativas */}
+                                            <dl class="row">
+                                                <dt className="col-sm-6 text_details">Estimativa de Outras atividades</dt>
+                                            </dl>
+                                            <dl class="row">
+                                                <dt class="col-sm-3 text-left">GCS</dt>
                                                 <dd class="col-sm-3">{gcs} horas</dd>
-                                                <dt class="col-sm-3">Prep. Ambiente:</dt>
+                                                <dt class="col-sm-3 text-left">Prep. Ambiente:</dt>
                                                 <dd class="col-sm-3">{preparacaoAmbiente} horas</dd>
                                             </dl>
                                             <dl class="row">
-                                                <dt class="col-sm-3">Homol/Produção</dt>
+                                                <dt class="col-sm-3 text-left">Homol/Produção</dt>
                                                 <dd class="col-sm-3">{homologacao} horas</dd>
-                                                <dt class="col-sm-3">Pós GO-live:</dt>
+                                                <dt class="col-sm-3 text-left">Pós GO-live:</dt>
                                                 <dd class="col-sm-3">{posGoLive} horas</dd>
                                             </dl>
                                             <dl class="row">
-                                                <dt class="col-sm-3">Elab. do escopo</dt>
+                                                <dt class="col-sm-3 text-left">Elab. do escopo</dt>
                                                 <dd class="col-sm-3">{elaboracaoEscopo} horas</dd>
-                                                <dt class="col-sm-3">Treinamento:</dt>
+                                                <dt class="col-sm-3 text-left">Treinamento:</dt>
                                                 <dd class="col-sm-3">{treinamento} horas</dd>
                                             </dl>
                                             <dl class="row">
-                                                <dt class="col-sm-3">GP Líder</dt>
+                                                <dt class="col-sm-3 text-left">GP Líder</dt>
                                                 <dd class="col-sm-3">{horasLider} horas</dd>
-                                                <dt class="col-sm-3">Reuniões líder:</dt>
+                                                <dt class="col-sm-3 text-left">Reuniões líder:</dt>
                                                 <dd class="col-sm-3">{reuniaoLider} horas</dd>
                                             </dl> <dl class="row">
-                                                <dt class="col-sm-3">Aprop. de horas</dt>
+                                                <dt class="col-sm-3 text-left">Aprop. de horas</dt>
                                                 <dd class="col-sm-3">{apropriacaoTime} horas</dd>
-                                                <dt class="col-sm-3">Reunião diária:</dt>
+                                                <dt class="col-sm-3 text-left">Reunião diária:</dt>
                                                 <dd class="col-sm-3">{reunioesDiaria} horas</dd>
                                             </dl>
+                                            <dl class="row">
+                                                <dt className="col-sm-4 text-left text-total--blue">Total</dt>
+                                                <dt class="col-sm-3 text-total--blue">{totalGeralOutras} horas</dt>
+                                            </dl>
                                             <hr className="featurette-divider" />
+
                                             {/* Resumo Salesforce*/}
                                             <dl class="row">
-                                                <dt className="text_details">Resumo para o Salesforce</dt>
+                                                <dt className="col-sm-6 text_details">Resumo para o Salesforce</dt>
                                             </dl>
                                             <dl class="row">
-                                                <dt class="col-sm-4">Elaboração da especificação: </dt>
-                                                <dd class="col-sm-4">{apropriacaoTime} horas</dd>
+                                                <dt class="col-sm-4 text-left">Elaboração da especificação: </dt>
+                                                <dd class="col-sm-4">{sumRequisito + retrabalhoRequisito} horas</dd>
                                             </dl>
                                             <dl class="row">
-                                                <dt class="col-sm-4">Desenvolvimento e testes: </dt>
-                                                <dd class="col-sm-4">{apropriacaoTime} horas</dd>
+                                                <dt class="col-sm-4 text-left">Desenvolvimento e testes: </dt>
+                                                <dd class="col-sm-4">{totalDevTestes} horas</dd>
                                             </dl>
                                             <dl class="row">
-                                                <dt class="col-sm-4">Treinamento: </dt>
-                                                <dd class="col-sm-4">{apropriacaoTime} horas</dd>
+                                                <dt class="col-sm-4 text-left">Treinamento: </dt>
+                                                <dd class="col-sm-4">{treinamento} horas</dd>
                                             </dl>
                                             <dl class="row">
-                                                <dt class="col-sm-4">Suporte a implantação: </dt>
-                                                <dd class="col-sm-4">{apropriacaoTime} horas</dd>
+                                                <dt class="col-sm-4 text-left">Suporte a implantação: </dt>
+                                                <dd class="col-sm-4">{homologacao} horas</dd>
                                             </dl>
                                             <dl class="row">
-                                                <dt class="col-sm-4">Acompanhamento pós GO-live: </dt>
-                                                <dd class="col-sm-4">{apropriacaoTime} horas</dd>
+                                                <dt class="col-sm-4 text-left">Acompanhamento pós GO-live: </dt>
+                                                <dd class="col-sm-4">{posGoLive} horas</dd>
                                             </dl>
                                             <dl class="row">
-                                                <dt class="col-sm-4">Gerenciamento do projeto: </dt>
-                                                <dd class="col-sm-4">{apropriacaoTime} horas</dd>
+                                                <dt class="col-sm-4 text-left">Gerenciamento do projeto: </dt>
+                                                <dd class="col-sm-4">{gp.toFixed(2)} horas</dd>
                                             </dl>
-
+                                            <hr className="featurette-divider" />
+                                            <dl class="row">
+                                                <dt className="col-sm-4 text-total dark-blue">Total de horas do projeto</dt>
+                                                <dt class="col-sm-3 text-total dark-blue">{totalGeral} horas</dt>
+                                            </dl>
                                         </div>
                                     </div>
                                 </div>
@@ -303,7 +282,7 @@ const EstimativaDetalhe = () => {
                                         <Link
                                             to={`/estimativas/impressao/${id}`}
                                             className="btn btn-success">
-                                            Impressão
+                                            Imprimir
                                         </Link>
                                     </div>
                                     <div className="col-md-2">
@@ -313,14 +292,14 @@ const EstimativaDetalhe = () => {
                                             Editar
                                         </Link>
                                     </div>
-                                    {/*   <div className="col-md-2">
+                                      <div className="col-md-2">
                                         <button
                                             type="button"
                                             onClick={() => deleteEstimativa(id)}
                                             className="btn btn-danger">
                                             Excluir
                                         </button>
-                                    </div> */}
+                                    </div>
                                 </div>
                             </form>
                         </div>

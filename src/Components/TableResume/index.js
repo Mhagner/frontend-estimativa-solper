@@ -8,14 +8,16 @@ const TableResume = ({ dados, dadosResumo, homologacao, posGoLive, treinamento, 
 
     function calculaResumo() {
         let dev = calculaColuna(dados, 'sumDesenvolvimento') || 0;
-        let teste = calculaColuna(dados, 'sumTeste') || 0;
+        console.log(dev)
+        let teste = calculaColuna(dados, 'sumTestes') || 0;
+        console.log(teste)
 
         //Requisito
         dadosResumo[0].horas = calculaColuna(dados, 'sumRequisito') || 0;
         //Implementação e testes
         dadosResumo[1].horas = dev + teste + parseInt(horasLider) + parseInt(reuniaoLider)
             + parseInt(apropriacaoTime) + parseInt(reunioesDiaria) + parseInt(gcs)
-            + parseInt(preparacaoAmbiente) + parseInt(elaboracaoEscopo)
+            + parseInt(preparacaoAmbiente) + parseInt(elaboracaoEscopo) + parseInt(treinamento)
         //Homologação
         dadosResumo[2].horas = parseInt(homologacao)
         //Pós GO-live

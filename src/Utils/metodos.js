@@ -3,7 +3,10 @@ export function calculaTotalManutencao(array, funcao, valor, percentual) {
     const dev = funcao(array, 'sumDesenvolvimento')
     const teste = funcao(array, 'sumTestes')
     const total = req + dev + teste
-    const resultado = (total * valor) * percentual
+    let resultado = 0
+    if(req != 0 && dev != 0 && teste != 0){
+        resultado = (total * valor) * percentual
+    }
 
     return resultado.toFixed(2)
 }

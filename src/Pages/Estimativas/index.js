@@ -25,7 +25,7 @@ function Estimativas() {
     function getEstimativas() {
         setLoader(true)
         //setEstimativas(estimativasData)
-        api.get('estimativas')
+        api.get('estimativas/?sort=-data')
             .then(response => {
                 setEstimativas(response.data)
                 setLoader(false)

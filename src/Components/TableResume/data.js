@@ -29,15 +29,15 @@ export const columns = [{
 
 export const dadosResumo = [
     {
-        atividades: 'Especificação técnica',
+        atividades: 'Elaboração da especificação técnica',
         horas: 0
     },
     {
-        atividades: 'Implementação e testes',
+        atividades: 'Desenvolvimento e testes',
         horas: 0
     },
     {
-        atividades: 'Implantação/homologação',
+        atividades: 'Suporte a implantação/homologação',
         horas: 0
     },
     {

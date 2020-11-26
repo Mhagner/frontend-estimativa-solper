@@ -125,8 +125,6 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         next()
     }
 
-    console.log(dados.length)
-
     const percentRetrabalho = 0.10
 
     let retRequisito = sumRequisito * percentRetrabalho
