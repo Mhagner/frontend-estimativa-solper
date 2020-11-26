@@ -10,7 +10,7 @@ import { useParams, useHistory, Link } from 'react-router-dom'
 import api from '../../Utils/api'
 import Loader from 'react-loader-spinner'
 
-const EstimativaDetalhe = () => {
+const EstimativaDetalheImpressao = () => {
 
     const [details, setDetails] = useState('')
     const [totalOutrasEstimativas, setTotalOutrasEstimativas] = useState(0)
@@ -50,27 +50,8 @@ const EstimativaDetalhe = () => {
             })
     }
 
-    function deleteEstimativa(id) {
-        api.delete(`estimativas/${id}`)
-            .then(response => {
-                //console.log("foi!")
-                history.push("/estimativas")
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-
     function gerarImpressao(){
         window.print()
-    }
-
-    function voltar() {
-        history.push('/estimativas')
-    }
-
-    function alterar() {
-        return `/estimativas/alterar-estimativa/${details.id}`
     }
 
     const {
@@ -171,7 +152,7 @@ const EstimativaDetalhe = () => {
 
     return (
 
-        <Main titlePage="Detalhes da estimativa">
+       
             <CardForm titleCard={`${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}>
                 <div className="row">
                     <div className="col-md-6">
@@ -292,35 +273,20 @@ const EstimativaDetalhe = () => {
                                 </div>
                                 <div className="row">
                                     <div className="col-md-2">
-                                        <button
-                                            type="button"
-                                            onClick={() => voltar()}
+                                        <Link
+                                            to={`/estimativas/${id}`}
                                             className="btn btn-info">
-                                            Voltar
-                                        </button>
-                                    </div>
-                                    <div className="col-md-2">
-                                        <Link
-                                            to={`/estimativas/impressao/${id}`}
-                                            className="btn btn-success">
-                                            Impressão
+                                            Cancelar
                                         </Link>
                                     </div>
                                     <div className="col-md-2">
-                                        <Link
-                                            to={() => alterar()}
-                                            className="btn btn-primary">
-                                            Editar
-                                        </Link>
-                                    </div>
-                                    {/*   <div className="col-md-2">
                                         <button
                                             type="button"
-                                            onClick={() => deleteEstimativa(id)}
-                                            className="btn btn-danger">
-                                            Excluir
+                                            onClick={() => gerarImpressao()}
+                                            className="btn btn-success">
+                                            Imprimir
                                         </button>
-                                    </div> */}
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -328,9 +294,8 @@ const EstimativaDetalhe = () => {
                     <hr className="featurette-divider" />
                 </div>
             </CardForm>
-        </Main >
     );
 };
 
 
-export default EstimativaDetalhe;
+export default EstimativaDetalheImpressao;

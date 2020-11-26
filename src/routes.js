@@ -16,6 +16,7 @@ import AlterarCliente from './Pages/AlterarCliente'
 import ClienteDetalhe from './Pages/ClienteDetalhe'
 import AlterarEstimativa from './Pages/AlterarEstimativa'
 import EstimativaDetalhe from './Pages/EstimativaDetalhe'
+import EstimativaDetalheImpressao from './Pages/EstimativaDetalheImpressao'
 
 function Routes() {
   return (
@@ -32,13 +33,14 @@ function Routes() {
         }} />
         <Route exact path="/parametrizacoes" component={Parametrizacoes} />
         <Route path="/parametrizacoes/usuarios" component={Usuarios} />
-        <Route path="/parametrizacoes/estimativa" component={ConfiguracaoEstimativa} />
+        <Route exact path="/parametrizacoes/estimativa" component={ConfiguracaoEstimativa} />
         <Route exact path="/parametrizacoes/clientes" component={Clientes} />
         <Route exact path="/parametrizacoes/clientes/:id" component={ClienteDetalhe} />
         <Route path="/parametrizacoes/novo-cliente" component={NovoCliente} />
         <Route path="/parametrizacoes/clientes/alterar-cliente/:id" component={AlterarCliente} />
         <Route path="/parametrizacoes/infra-nuvem" component={InfraNuvem} />
         <Route exact path="/estimativas/:id" component={EstimativaDetalhe} />
+        <Route exact path="/estimativas/impressao/:id" component={EstimativaDetalheImpressao} />
         <Route exact path="/estimativas/alterar-estimativa/:id" component={AlterarEstimativa} />
       </Switch>
     </BrowserRouter>
