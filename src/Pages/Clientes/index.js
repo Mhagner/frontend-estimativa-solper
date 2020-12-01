@@ -9,6 +9,7 @@ import api from '../../Utils/api'
 import { options } from '../../Components/TableEdite/data'
 import Loader from 'react-loader-spinner'
 import '../../Utils/styles.scss'
+import ButtonIcon from '../../Components/ButtonIcon'
 
 const Clientes = () => {
 
@@ -43,7 +44,7 @@ const Clientes = () => {
     const actionFormaterDetails = () => {
         return (
             <Link className='btn btn-default btn-custom'
-            to={`/parametrizacoes/clientes/${id}`}>
+                to={`/parametrizacoes/clientes/${id}`}>
                 <i className='fa fa-eye btn-icon'></i>
             </Link>
         );
@@ -81,7 +82,7 @@ const Clientes = () => {
                 return { width: "20%" };
             }
         },
-    
+
         {
             isDummyField: false,
             formatter: actionFormaterDetails,
@@ -104,14 +105,20 @@ const Clientes = () => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-8 mb-3">
-                    <button
+                    <ButtonIcon
+                        size={`2 mb-3`}
+                        route={'/parametrizacoes/novo-cliente'}
+                        color="success">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    </ButtonIcon>
+                   {/*  <button
                         type="button"
                         onClick={(id) => history.push("/parametrizacoes/novo-cliente")}
                         className="btn btn-success">
                         Novo
-                    </button>
-                </div>
+                    </button> */}
             </div>
             <div className="row">
                 <div className="col-md-6 order-md-1">

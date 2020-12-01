@@ -23,22 +23,22 @@ function Routes() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/nova-estimativa" component={NovaEstimativa} />
+        <Route exact path="/nova-estimativa" component={NovaEstimativa} />
         <Route exact path="/estimativas" component={Estimativas} />
-        <Route path="/tipos-solucao" component={TiposSolucao} />
-        <Route path="/base-conhecimento" component={BaseConhecimento} />
-        <Route path="/escopo-office-online" component={() => {
+        <Route exact path="/tipos-solucao" component={TiposSolucao} />
+        <Route exact path="/base-conhecimento" component={BaseConhecimento} />
+        <Route exact path="/escopo-office-online" component={() => {
           window.location.href = 'https://www.office.com/launch/word?auth=2'
           return null
         }} />
         <Route exact path="/parametrizacoes" component={Parametrizacoes} />
-        <Route path="/parametrizacoes/usuarios" component={Usuarios} />
+        <Route exact path="/parametrizacoes/usuarios" component={Usuarios} />
         <Route exact path="/parametrizacoes/estimativa" component={ConfiguracaoEstimativa} />
         <Route exact path="/parametrizacoes/clientes" component={Clientes} />
         <Route exact path="/parametrizacoes/clientes/:id" component={ClienteDetalhe} />
-        <Route path="/parametrizacoes/novo-cliente" component={NovoCliente} />
-        <Route path="/parametrizacoes/clientes/alterar-cliente/:id" component={AlterarCliente} />
-        <Route path="/parametrizacoes/infra-nuvem" component={InfraNuvem} />
+        <Route exact path="/parametrizacoes/novo-cliente" component={NovoCliente} />
+        <Route exact path="/parametrizacoes/clientes/alterar-cliente/:id" component={AlterarCliente} />
+        <Route exact path="/parametrizacoes/infra-nuvem" component={InfraNuvem} />
         <Route exact path="/estimativas/:id" component={EstimativaDetalhe} />
         <Route exact path="/estimativas/impressao/:id" component={EstimativaDetalheImpressao} />
         <Route exact path="/estimativas/alterar-estimativa/:id" component={AlterarEstimativa} />

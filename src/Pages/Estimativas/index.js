@@ -45,7 +45,7 @@ function Estimativas() {
     const actionFormaterDetails = () => {
         return (
             <Link className='btn btn-default btn-custom'
-                to={`/estimativas/${id}`}>
+                to={`/estimativas/${id}`} alt="Visualizar">
                 <i className='fa fa-eye btn-icon'></i>
             </Link>
         );
