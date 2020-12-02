@@ -87,7 +87,6 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
                                 </div>
                             </div>
                             <div className="row">
-
                                 <div className="col-md-4 mb-3">
                                     <ItemForm
                                         label="Responsável pelo escopo"
@@ -105,6 +104,11 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
                                         value={responsavelEstimativa}
                                         onChange={setForm}
                                     />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-md-3 mb-3">
+                                    
                                 </div>
                             </div>
                             <div className="row">
