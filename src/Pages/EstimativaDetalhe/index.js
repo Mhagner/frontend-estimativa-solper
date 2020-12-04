@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Spin } from 'antd'
 import Main from '../../Components/Main'
 import Breadcrumb from '../../Components/Breadcrumb'
 import BootstrapTable from 'react-bootstrap-table-next'
@@ -24,6 +25,7 @@ const EstimativaDetalhe = () => {
     const [percentualRetrabalhoRequisito, setPercentualRetrabalhoRequisito] = useState(0.10)
     const [percentualRetrabalhoDesenvolvimento, setPercentualRetrabalhoDesenvolvimento] = useState(0.10)
     const [percentualRetrabalhoTestes, setPercentualRetrabalhoTestes] = useState(0.10)
+    const [loader, setLoader] = useState(false)
 
     let history = useHistory()
     let { id } = useParams()
@@ -48,6 +50,7 @@ const EstimativaDetalhe = () => {
     //console.log(details.dados.lenght)
 
     function getEstimativa() {
+        setLoader(true)
         api.get(`estimativas/${id}`)
             .then(response => {
                 setDetails(response.data)
@@ -56,9 +59,11 @@ const EstimativaDetalhe = () => {
                 setSumDesenvolvimento(load(response.data.dados, 'desenvolvimento'))
                 setSumTestes(load(response.data.dados, 'testes'))
                 setSumTotal(load(response.data.dados, 'total'))
+                setLoader(false)
             })
             .catch(error => {
                 console.log(error)
+                setLoader(false)
             })
     }
 
@@ -132,9 +137,11 @@ const EstimativaDetalhe = () => {
             <CardForm titleCard={`Estimativa - ${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}>
                 <div className="row">
                     <div className="col-md-6">
-                        <Breadcrumb
-                            lista={lista}
-                        />
+                        <Spin spinning={loader}>
+                            <Breadcrumb
+                                lista={lista}
+                            />
+                        </Spin>
                     </div>
                 </div>
                 <div className="form">
@@ -180,131 +187,133 @@ const EstimativaDetalhe = () => {
                                 </div>
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div class="jumbotron">
-                                            {/* Informações da oportunidade */}
-                                            <dl class="row">
-                                                <dt className="col-sm-6 text_details">Oportunidade</dt>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt className="col-sm-3 text-left">Data:</dt>
-                                                <dd class="col-sm-3">{data}</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt class="col-sm-3 text-left">Oportunidade:</dt>
-                                                <dd class="col-sm-9">{`${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt class="col-sm-3 text-left">Resp. escopo:</dt>
-                                                <dd class="col-sm-3">{responsavelEscopo}</dd>
-                                                <dt class="col-sm-3 text-left">Resp. estimativa:</dt>
-                                                <dd class="col-sm-3">{responsavelEstimativa}</dd>
-                                            </dl>
-                                            <hr className="featurette-divider" />
-                                            {/* Estimativa Principal */}
-                                            <dl class="row">
-                                                <dt className="col-sm-6 text_details">Estimativa Principal</dt>
-                                            </dl>
-                                            <div className="col-md-12 mb-3">
-                                                <BootstrapTable
-                                                    keyField="id"
-                                                    wrapperClasses="borda"
-                                                    bootstrap4
-                                                    data={dados}
-                                                    columns={columns}
-                                                    striped
-                                                />
+                                        <Spin spinning={loader}>
+                                            <div class="jumbotron">
+                                                {/* Informações da oportunidade */}
+                                                <dl class="row">
+                                                    <dt className="col-sm-6 text_details">Oportunidade</dt>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt className="col-sm-3 text-left">Data:</dt>
+                                                    <dd class="col-sm-3">{data}</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-3 text-left">Oportunidade:</dt>
+                                                    <dd class="col-sm-9">{`${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-3 text-left">Resp. escopo:</dt>
+                                                    <dd class="col-sm-3">{responsavelEscopo}</dd>
+                                                    <dt class="col-sm-3 text-left">Resp. estimativa:</dt>
+                                                    <dd class="col-sm-3">{responsavelEstimativa}</dd>
+                                                </dl>
+                                                <hr className="featurette-divider" />
+                                                {/* Estimativa Principal */}
+                                                <dl class="row">
+                                                    <dt className="col-sm-6 text_details">Estimativa Principal</dt>
+                                                </dl>
+                                                <div className="col-md-12 mb-3">
+                                                    <BootstrapTable
+                                                        keyField="id"
+                                                        wrapperClasses="borda"
+                                                        bootstrap4
+                                                        data={dados}
+                                                        columns={columns}
+                                                        striped
+                                                    />
+                                                </div>
+                                                <dl class="row">
+                                                    <dt className="col-sm-4 text-left">Retrabalho requisito</dt>
+                                                    <dd class="col-sm-3">{retrabalhoRequisito.toFixed(2)} horas</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt className="col-sm-4 text-left">Retrabalho desenvolvimento</dt>
+                                                    <dd class="col-sm-3">{retrabalhoDesenvolvimento.toFixed(2)} horas</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt className="col-sm-4 text-left">Retrabalho testes</dt>
+                                                    <dd class="col-sm-3">{retrabalhoTestes.toFixed(2)} horas</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt className="col-sm-4 text-left text-total--blue">Total</dt>
+                                                    <dt class="col-sm-3 text-total--blue">{totalGeralPrincipal} horas</dt>
+                                                </dl>
+                                                <hr className="featurette-divider" />
+
+                                                {/* Demais estimativas */}
+                                                <dl class="row">
+                                                    <dt className="col-sm-6 text_details">Estimativa de Outras atividades</dt>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-3 text-left">GCS</dt>
+                                                    <dd class="col-sm-3">{gcs} horas</dd>
+                                                    <dt class="col-sm-3 text-left">Prep. Ambiente:</dt>
+                                                    <dd class="col-sm-3">{preparacaoAmbiente} horas</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-3 text-left">Homol/Produção</dt>
+                                                    <dd class="col-sm-3">{homologacao} horas</dd>
+                                                    <dt class="col-sm-3 text-left">Pós GO-live:</dt>
+                                                    <dd class="col-sm-3">{posGoLive} horas</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-3 text-left">Elab. do escopo</dt>
+                                                    <dd class="col-sm-3">{elaboracaoEscopo} horas</dd>
+                                                    <dt class="col-sm-3 text-left">Treinamento:</dt>
+                                                    <dd class="col-sm-3">{treinamento} horas</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-3 text-left">GP Líder</dt>
+                                                    <dd class="col-sm-3">{horasLider} horas</dd>
+                                                    <dt class="col-sm-3 text-left">Reuniões líder:</dt>
+                                                    <dd class="col-sm-3">{reuniaoLider} horas</dd>
+                                                </dl> <dl class="row">
+                                                    <dt class="col-sm-3 text-left">Aprop. de horas</dt>
+                                                    <dd class="col-sm-3">{apropriacaoTime} horas</dd>
+                                                    <dt class="col-sm-3 text-left">Reunião diária:</dt>
+                                                    <dd class="col-sm-3">{reunioesDiaria} horas</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt className="col-sm-4 text-left text-total--blue">Total</dt>
+                                                    <dt class="col-sm-3 text-total--blue">{totalGeralOutras} horas</dt>
+                                                </dl>
+                                                <hr className="featurette-divider" />
+
+                                                {/* Resumo Salesforce*/}
+                                                <dl class="row">
+                                                    <dt className="col-sm-6 text_details">Resumo para o Salesforce</dt>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-4 text-left">Elaboração da especificação: </dt>
+                                                    <dd class="col-sm-4">{sumRequisito + retrabalhoRequisito} horas</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-4 text-left">Desenvolvimento e testes: </dt>
+                                                    <dd class="col-sm-4">{totalDevTestes} horas</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-4 text-left">Treinamento: </dt>
+                                                    <dd class="col-sm-4">{treinamento} horas</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-4 text-left">Suporte a implantação: </dt>
+                                                    <dd class="col-sm-4">{homologacao} horas</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-4 text-left">Acompanhamento pós GO-live: </dt>
+                                                    <dd class="col-sm-4">{posGoLive} horas</dd>
+                                                </dl>
+                                                <dl class="row">
+                                                    <dt class="col-sm-4 text-left">Gerenciamento do projeto: </dt>
+                                                    <dd class="col-sm-4">{gp.toFixed(2)} horas</dd>
+                                                </dl>
+                                                <hr className="featurette-divider" />
+                                                <dl class="row">
+                                                    <dt className="col-sm-4 text-total dark-blue">Total de horas do projeto</dt>
+                                                    <dt class="col-sm-3 text-total dark-blue">{totalGeral} horas</dt>
+                                                </dl>
                                             </div>
-                                            <dl class="row">
-                                                <dt className="col-sm-4 text-left">Retrabalho requisito</dt>
-                                                <dd class="col-sm-3">{retrabalhoRequisito.toFixed(2)} horas</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt className="col-sm-4 text-left">Retrabalho desenvolvimento</dt>
-                                                <dd class="col-sm-3">{retrabalhoDesenvolvimento.toFixed(2)} horas</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt className="col-sm-4 text-left">Retrabalho testes</dt>
-                                                <dd class="col-sm-3">{retrabalhoTestes.toFixed(2)} horas</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt className="col-sm-4 text-left text-total--blue">Total</dt>
-                                                <dt class="col-sm-3 text-total--blue">{totalGeralPrincipal} horas</dt>
-                                            </dl>
-                                            <hr className="featurette-divider" />
-
-                                            {/* Demais estimativas */}
-                                            <dl class="row">
-                                                <dt className="col-sm-6 text_details">Estimativa de Outras atividades</dt>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt class="col-sm-3 text-left">GCS</dt>
-                                                <dd class="col-sm-3">{gcs} horas</dd>
-                                                <dt class="col-sm-3 text-left">Prep. Ambiente:</dt>
-                                                <dd class="col-sm-3">{preparacaoAmbiente} horas</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt class="col-sm-3 text-left">Homol/Produção</dt>
-                                                <dd class="col-sm-3">{homologacao} horas</dd>
-                                                <dt class="col-sm-3 text-left">Pós GO-live:</dt>
-                                                <dd class="col-sm-3">{posGoLive} horas</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt class="col-sm-3 text-left">Elab. do escopo</dt>
-                                                <dd class="col-sm-3">{elaboracaoEscopo} horas</dd>
-                                                <dt class="col-sm-3 text-left">Treinamento:</dt>
-                                                <dd class="col-sm-3">{treinamento} horas</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt class="col-sm-3 text-left">GP Líder</dt>
-                                                <dd class="col-sm-3">{horasLider} horas</dd>
-                                                <dt class="col-sm-3 text-left">Reuniões líder:</dt>
-                                                <dd class="col-sm-3">{reuniaoLider} horas</dd>
-                                            </dl> <dl class="row">
-                                                <dt class="col-sm-3 text-left">Aprop. de horas</dt>
-                                                <dd class="col-sm-3">{apropriacaoTime} horas</dd>
-                                                <dt class="col-sm-3 text-left">Reunião diária:</dt>
-                                                <dd class="col-sm-3">{reunioesDiaria} horas</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt className="col-sm-4 text-left text-total--blue">Total</dt>
-                                                <dt class="col-sm-3 text-total--blue">{totalGeralOutras} horas</dt>
-                                            </dl>
-                                            <hr className="featurette-divider" />
-
-                                            {/* Resumo Salesforce*/}
-                                            <dl class="row">
-                                                <dt className="col-sm-6 text_details">Resumo para o Salesforce</dt>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt class="col-sm-4 text-left">Elaboração da especificação: </dt>
-                                                <dd class="col-sm-4">{sumRequisito + retrabalhoRequisito} horas</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt class="col-sm-4 text-left">Desenvolvimento e testes: </dt>
-                                                <dd class="col-sm-4">{totalDevTestes} horas</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt class="col-sm-4 text-left">Treinamento: </dt>
-                                                <dd class="col-sm-4">{treinamento} horas</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt class="col-sm-4 text-left">Suporte a implantação: </dt>
-                                                <dd class="col-sm-4">{homologacao} horas</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt class="col-sm-4 text-left">Acompanhamento pós GO-live: </dt>
-                                                <dd class="col-sm-4">{posGoLive} horas</dd>
-                                            </dl>
-                                            <dl class="row">
-                                                <dt class="col-sm-4 text-left">Gerenciamento do projeto: </dt>
-                                                <dd class="col-sm-4">{gp.toFixed(2)} horas</dd>
-                                            </dl>
-                                            <hr className="featurette-divider" />
-                                            <dl class="row">
-                                                <dt className="col-sm-4 text-total dark-blue">Total de horas do projeto</dt>
-                                                <dt class="col-sm-3 text-total dark-blue">{totalGeral} horas</dt>
-                                            </dl>
-                                        </div>
+                                        </Spin>
                                     </div>
                                 </div>
                                 <div className="row">

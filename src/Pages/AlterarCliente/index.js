@@ -7,15 +7,19 @@ import { tipos } from '../../Utils/mocks/mockTipos'
 import { useHistory, useParams, Link } from 'react-router-dom'
 import api from '../../Utils/api'
 import ButtonIcon from '../../Components/ButtonIcon'
+import { notification } from 'antd'
 
-    
+
 const AlterarCliente = () => {
 
-    const [descricao, setDescricao] = useState('')
-    const [tipo, setTipo] = useState('')
-    const [colaboradores, setColaboradores] = useState(0)
+    const [cliente, setCliente] =  useState('')
 
     let { id } = useParams()
+
+    notification.config({
+        bottom: 50,
+        duration: 1.8
+    })
 
     useEffect(() => {
         getCliente()
@@ -34,7 +38,7 @@ const AlterarCliente = () => {
         },
         {
             link: `/parametrizacoes/clientes/${id}`,
-            descricao: `${descricao}`
+            descricao: `${cliente.descricao}`
         },
         {
             descricao: "Alterar cliente",
@@ -46,9 +50,13 @@ const AlterarCliente = () => {
     function getCliente() {
         api.get(`clientes/${id}`)
             .then(response => {
-                setDescricao(response.data.descricao)
-                setTipo(response.data.tipo)
-                setColaboradores(response.data.colaboradores)
+                const dados = response.data
+                const retorno = {
+                    descricao: dados.descricao.toUpperCase(),
+                    tipo: dados.tipo,
+                    colaboradores: dados.colaboradores
+                }
+                setCliente(retorno)
             })
             .catch(error => {
                 console.log(error)
@@ -58,34 +66,29 @@ const AlterarCliente = () => {
     function alterarCliente(value) {
         api.put(`clientes/${id}`, value)
             .then(response => {
+                notification.success({
+                    message: 'Sucesso!',
+                    description: "Informações do cliente alteradas com sucesso!"
+                })
                 history.push("/parametrizacoes/clientes")
             })
             .catch(error => {
-                console.log(error)
+                notification.error({
+                    message: 'Ops!',
+                    description: error.toString()
+                })
             })
     }
 
     function submeterParaAlteracao(e) {
-        const novaAlteracao = {
-            descricao: descricao,
-            tipo: tipo,
-            colaboradores: colaboradores
-        }
-        alterarCliente(novaAlteracao)
-        //AlterarCliente(id)
+        alterarCliente(cliente)
         e.preventDefault()
     }
 
-    function handleDescricaoChange(e) {
-        setDescricao(e.target.value)
-    }
-
-    function handleTipoChange(e) {
-        setTipo(e.target.value)
-    }
-
-    function handleColaboradoresChange(e) {
-        setColaboradores(e.target.value)
+    function handleChange(e) {
+        const auxCliente = { ...cliente }
+        auxCliente[e.target.name] = e.target.value
+        setCliente(auxCliente)
     }
 
     function voltar() {
@@ -111,8 +114,8 @@ const AlterarCliente = () => {
                                         label="Descrição"
                                         name="descricao"
                                         type="text"
-                                        value={descricao}
-                                        onChange={handleDescricaoChange}
+                                        value={cliente.descricao}
+                                        onChange={handleChange}
                                     />
                                 </div>
 
@@ -121,8 +124,8 @@ const AlterarCliente = () => {
                                         label="Tipo"
                                         name="tipo"
                                         lista={tipos}
-                                        value={tipo}
-                                        onChange={handleTipoChange}
+                                        value={cliente.tipo}
+                                        onChange={handleChange}
                                     />
                                 </div>
 
@@ -131,8 +134,8 @@ const AlterarCliente = () => {
                                         label="Qtde Colaboradores"
                                         name="colaboradores"
                                         type="number"
-                                        value={colaboradores}
-                                        onChange={handleColaboradoresChange}
+                                        value={cliente.colaboradores}
+                                        onChange={handleChange}
                                     />
                                 </div>
 

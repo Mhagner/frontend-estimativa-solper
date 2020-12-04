@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Steps, notification } from 'antd'
 import { useHistory } from 'react-router-dom'
 import BootstrapTable from 'react-bootstrap-table-next'
 import cellEditFactory from 'react-bootstrap-table2-editor'
@@ -9,6 +10,8 @@ import ButtonStep from '../../ButtonStep'
 import Card from '../../Card'
 import { options } from '../../TableEdite/data'
 import './style.css'
+import { LoadingOutlined, SolutionOutlined, EyeOutlined, AppstoreAddOutlined, AlertOutlined } from '@ant-design/icons';
+
 
 const widthCard = '18rem'
 const heightCard = '7rem'
@@ -31,8 +34,14 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
     const [hoverIdx, setHoverIdx] = useState(null)
 
     const { previous, next } = navigation;
+    const { Step } = Steps
 
     let history = useHistory();
+
+    notification.config({
+        bottom: 50,
+        duration: 2
+    })
 
     useEffect(() => {
         resumaHoras(dados)
@@ -120,7 +129,12 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
 
     function validaPreenchimento(e) {
         if (dados.length < 1) {
-            return console.log("Precisa preencher os campos!")
+            return (
+                notification.warning({
+                    message: 'Atenção!',
+                    description: "É necessário adicionar ao menos um item!"
+                })
+            )
         }
         next()
     }
@@ -268,7 +282,19 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         <div className="form">
             <div className="row">
                 <div className="col-md-12 order-md-1">
-                    <CardForm titleCard={`Estimativa Principal - OPP: ${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}>
+                    <CardForm titleCard={`${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}>
+                        <div className="row">
+                            <div className="col-md-12 mb-2">
+                                <Steps>
+                                    <Step status="finish" title="Oportunidade" icon={<SolutionOutlined />} />
+                                    <Step status="process" title="Estimativa principal" icon={<LoadingOutlined />} />
+                                    <Step status="wait" title="Outras estimativas" icon={<AppstoreAddOutlined />} />
+                                    <Step status="wait" title="Manutenção" icon={<AlertOutlined />} />
+                                    <Step status="wait" title="Resumo" icon={<EyeOutlined />} />
+                                </Steps>
+                            </div>
+                        </div>
+                        <hr className="featurette-divider" />
                         <div className="btn-group mb-3">
                             <button className="btn btn-primary" onClick={() => addNewRow()}>Novo item</button>
                         </div>

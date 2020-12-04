@@ -10,7 +10,7 @@ function Home() {
     return (
         <Main titlePage="Dashboard">
             <div className="row">
-                <div className="col-4">
+              {/*   <div className="col-4">
                     <CardBox
                         titleNumber="16"
                         description="Estimativas Workflows"
@@ -33,7 +33,7 @@ function Home() {
                         color="#BA79CB"
                         image={LogoCust}
                     />
-                </div>
+                </div> */}
             </div>
         </Main>
     )

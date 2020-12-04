@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Main from '../../Components/Main'
 import Breadcrumb from '../../Components/Breadcrumb'
 import ItemForm from '../../Components/ItemForm'
 import Combobox from '../../Components/Combobox'
 import { tipos } from '../../Utils/mocks/mockTipos'
 import { useHistory } from 'react-router-dom'
-import useForm from '../../Utils/hooks/useForm'
 import api from '../../Utils/api'
 import ButtonIcon from '../../Components/ButtonIcon'
-
+import { notification } from 'antd'
 
 const NovoCliente = () => {
-    const [{ values }, reset, handleChange, handleSubmit] = useForm();
+
+    const [cliente, setCliente] = useState('')
+    const [duplicado, setDuplicado] = useState(false)
 
     let history = useHistory()
+
+    //console.log(cliente)
+
+    notification.config({
+        bottom: 50,
+        duration: 1.8
+    })
 
     const lista = [
         {
@@ -31,15 +39,46 @@ const NovoCliente = () => {
         },
     ]
 
-    function cadastrarCliente(e) {
-        api.post('clientes', values)
+    function cadastrarCliente(value) {
+        api.post('clientes', value)
             .then(response => {
-                reset()
+                notification.success({
+                    message: 'Sucesso!',
+                    description: "Cliente cadastro com sucesso!"
+                })
                 history.push('/parametrizacoes/clientes')
             })
             .catch(response => {
                 console.log("Cliente já cadastrado na base!")
             })
+    }
+
+    function valideDuplicidade(value) {
+        api.get(`clientes/?descricao=${value.descricao.toUpperCase()}`)
+            .then(response => {
+                const dados = response.data
+                if (dados.lenght > 0) {
+                    return true
+                }
+                else {
+                    return false
+                }
+            })
+    }
+
+    function submeterCliente(e) {
+        cadastrarCliente(cliente)
+        e.preventDefault()
+    }
+
+    function handleChange(e) {
+        const auxCliente = { ...cliente }
+        if (e.target.name === "descricao") {
+            auxCliente[e.target.name] = e.target.value.toUpperCase()
+        } else {
+            auxCliente[e.target.name] = e.target.value
+        }
+        setCliente(auxCliente)
     }
 
     function voltar() {
@@ -58,11 +97,12 @@ const NovoCliente = () => {
             <div className="form">
                 <div className="row">
                     <div className="col-md-10 order-md-1">
-                        <form onSubmit={handleSubmit(cadastrarCliente)}>
+                        <form onSubmit={submeterCliente}>
                             <div className="row">
                                 <div className="col-md-4 mb-3">
                                     <ItemForm
                                         label="Descrição"
+                                        value={cliente.descricao}
                                         name="descricao"
                                         type="text"
                                         onChange={handleChange}
@@ -74,6 +114,7 @@ const NovoCliente = () => {
                                         label="Tipo"
                                         name="tipo"
                                         lista={tipos}
+                                        value={cliente.tipo}
                                         onChange={handleChange}
                                     />
                                 </div>
@@ -81,6 +122,7 @@ const NovoCliente = () => {
                                 <div className="col-md-4 mb-3">
                                     <ItemForm
                                         label="Qtde Colaboradores"
+                                        value={cliente.colaboradores}
                                         name="colaboradores"
                                         type="number"
                                         onChange={handleChange}
@@ -89,7 +131,7 @@ const NovoCliente = () => {
 
                             </div>
                             <div className="row">
-                                 <ButtonIcon
+                                <ButtonIcon
                                     size={2}
                                     route={voltar()}
                                     color="secondary">
@@ -117,6 +159,5 @@ const NovoCliente = () => {
         </Main >
     );
 };
-
 
 export default NovoCliente;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Spin } from 'antd'
 import BootstrapTable from 'react-bootstrap-table-next';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter'
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -111,13 +112,7 @@ function Estimativas() {
     return (
         <Main titlePage="Estimativas Realizadas">
             <div className="col-md-10 order-md-1">
-                {(loader) ?
-                    <Loader
-                        type="TailSpin"
-                        color="#00BFFF"
-                        height={100}
-                        width={100}
-                    /> :
+                <Spin spinning={loader}>
                     <BootstrapTable
                         keyField="idEstimativa"
                         bootstrap4
@@ -130,7 +125,7 @@ function Estimativas() {
                         striped
                         hover
                     />
-                }
+                </Spin>
             </div>
         </Main >
     )

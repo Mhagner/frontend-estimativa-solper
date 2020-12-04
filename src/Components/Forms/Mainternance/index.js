@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Steps, notification } from 'antd'
 import ButtonStep from '../../ButtonStep'
 import CardForm from '../../CardForm'
 import Card from '../../Card'
@@ -8,6 +8,8 @@ import RadioButton from '../../RadioButton'
 import { calculaTotalManutencao, calculaColuna } from '../../../Utils/metodos'
 //import { servidores } from '../../../Utils/mocks/mockCustoServidores'
 import api from '../../../Utils/api'
+import { LoadingOutlined, SolutionOutlined, EyeOutlined, CalculatorOutlined, AppstoreAddOutlined } from '@ant-design/icons';
+
 
 
 const defaultData = {
@@ -18,24 +20,32 @@ const defaultData = {
 
 
 const Mainternance = ({ setForm, formData, navigation, buttonPrevious, buttonNext }) => {
-    const { numeroDaOportunidade, cliente, valorHora, custoInfra, dados } = formData;
+    const { numeroDaOportunidade, cliente, valorHora, custoInfra, dados, descricaoDaOportunidade } = formData;
 
     const { previous, next } = navigation;
 
     const [infra, setInfra] = useState(defaultData)
 
-    useEffect(()=>{
+    const { Step } = Steps
+
+    notification.config({
+        bottom: 50,
+        duration: 2
+    })
+
+
+    useEffect(() => {
         obtenhaServidores()
     }, [])
 
-    function obtenhaServidores(){
+    function obtenhaServidores() {
         api.get('infra/5f237bd6e9c53a22a8a9edf9')
-        .then(response => {
-            setInfra(response.data)
-        })
-        .catch(err =>{
-            console.log("Erro ao tentar obter os servidores nuvem!")
-        })
+            .then(response => {
+                setInfra(response.data)
+            })
+            .catch(err => {
+                console.log("Erro ao tentar obter os servidores nuvem!")
+            })
     }
 
     const totalManutenção = calculaTotalManutencao(dados, calculaColuna, valorHora, 0.01)
@@ -44,7 +54,18 @@ const Mainternance = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         <div className="form">
             <div className="row">
                 <div className="col-md-12 order-md-1">
-                    <CardForm titleCard={`Manutenção - OPP: ${numeroDaOportunidade} - ${cliente}`}>
+                    <CardForm titleCard={`${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}>
+                        <div className="row">
+                            <div className="col-md-12 mb-5">
+                                <Steps>
+                                    <Step status="finish" title="Oportunidade" icon={<SolutionOutlined />} />
+                                    <Step status="finish" title="Estimativa principal" icon={<CalculatorOutlined />} />
+                                    <Step status="finish" title="Outras estimativas" icon={<AppstoreAddOutlined />} />
+                                    <Step status="process" title="Manutenção" icon={<LoadingOutlined />} />
+                                    <Step status="wait" title="Resumo" icon={<EyeOutlined />} />
+                                </Steps>
+                            </div>
+                        </div>
                         <div className="row">
                             <div className="col-md-6 mb-3">
                                 <Card title="Manutenção mensal de customizados">

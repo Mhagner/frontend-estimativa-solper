@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Spin } from 'antd'
 import Main from '../../Components/Main'
 import Breadcrumb from '../../Components/Breadcrumb'
 import CardForm from '../../Components/CardForm'
@@ -9,6 +10,7 @@ import ButtonIcon from '../../Components/ButtonIcon'
 const ClienteDetalhe = () => {
 
     const [details, setDetails] = useState('')
+    const [loader, setLoader] = useState(false)
 
     let history = useHistory()
     let { id } = useParams()
@@ -35,9 +37,11 @@ const ClienteDetalhe = () => {
     ]
 
     function getCliente() {
+        setLoader(true)
         api.get(`clientes/${id}`)
             .then(response => {
                 setDetails(response.data)
+                setLoader(false)
             })
             .catch(error => {
                 console.log(error)
@@ -67,9 +71,11 @@ const ClienteDetalhe = () => {
             <CardForm>
                 <div className="row">
                     <div className="col-md-6">
-                        <Breadcrumb
-                            lista={lista}
-                        />
+                        <Spin spinning={loader}>
+                            <Breadcrumb
+                                lista={lista}
+                            />
+                        </Spin>
                     </div>
                 </div>
                 <div className="form">
@@ -78,18 +84,20 @@ const ClienteDetalhe = () => {
                             <form>
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div class="jumbotron">
-                                            <dl class="row">
-                                                <dt class="col-sm-3">Cliente</dt>
-                                                <dd class="col-sm-9">{details.descricao}</dd>
+                                        <Spin spinning={loader}>
+                                            <div class="jumbotron">
+                                                <dl class="row">
+                                                    <dt class="col-sm-3">Cliente</dt>
+                                                    <dd class="col-sm-9">{details.descricao}</dd>
 
-                                                <dt class="col-sm-3">Tipo</dt>
-                                                <dd class="col-sm-9">{details.tipo}</dd>
+                                                    <dt class="col-sm-3">Tipo</dt>
+                                                    <dd class="col-sm-9">{details.tipo}</dd>
 
-                                                <dt class="col-sm-3">Colaboradores</dt>
-                                                <dd class="col-sm-9">{details.colaboradores}</dd>
-                                            </dl>
-                                        </div>
+                                                    <dt class="col-sm-3">Colaboradores</dt>
+                                                    <dd class="col-sm-9">{details.colaboradores}</dd>
+                                                </dl>
+                                            </div>
+                                        </Spin>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -124,14 +132,15 @@ const ClienteDetalhe = () => {
                                             Editar
                                         </Link>
                                     </div> */}
-                                    {/* <div className="col-md-2">
-                                        <button
-                                            type="button"
-                                            onClick={() => deleteCliente(id)}
-                                            className="btn btn-danger">
-                                            Excluir
-                                        </button>
-                                    </div> */}
+                                    <ButtonIcon
+                                        size={2}
+                                        handlerClick={() => deleteCliente(id)}
+                                        color="danger">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                        </svg>
+                                    </ButtonIcon>
                                 </div>
                             </form>
                         </div>

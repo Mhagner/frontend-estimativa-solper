@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Spin } from 'antd'
 import Main from '../../Components/Main'
 import Breadcrumb from '../../Components/Breadcrumb'
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -9,6 +10,7 @@ import useForm from '../../Utils/hooks/useForm'
 import Loader from 'react-loader-spinner'
 import { useHistory } from 'react-router-dom'
 import ButtonIcon from '../../Components/ButtonIcon'
+import { notification } from 'antd'
 
 const defaultData = {
     data: '',
@@ -18,17 +20,21 @@ const defaultData = {
 
 const InfraNuvem = () => {
     const [{ values }, reset, handleChange, handleSubmit] = useForm();
+    const [loader, setLoader] = useState(false)
     //const [data, setData] = useState('')
 
     const [infra, setInfra] = useState(defaultData)
     const [alterou, setAlterou] = useState(false)
-    const [loader, setLoader] = useState(false)
 
     let history = useHistory()
 
+    notification.config({
+        bottom: 50,
+        duration: 2
+    })
+
     useEffect(() => {
         obtenhaInfra()
-        //obtenhaServidores()
     }, [])
 
     function obtenhaInfra() {
@@ -44,18 +50,29 @@ const InfraNuvem = () => {
     }
 
     function salvarInfra(e) {
+        setLoader(true)
         if (alterou) {
             api.put('infra/5f237bd6e9c53a22a8a9edf9', infra)
                 .then(response => {
                     setAlterou(false)
-                    console.log("sucesso!")
-                    history.push('/parametrizacoes')
+                    notification.success({
+                        message: 'Sucesso!',
+                        description: "Valores de infra alterados com sucesso!"
+                    })
+                    setLoader(false)
                 })
                 .catch(error => {
-                    console.log("erro!")
+                    notification.error({
+                        message: 'Ops!',
+                        description: "Erro!"
+                    })
                 })
         } else {
-            console.log("Não teve alterações!")
+            notification.warning({
+                message: 'Ops!',
+                description: "Altere ao menos um valor!"
+            })
+            setLoader(false)
         }
     }
 
@@ -130,25 +147,9 @@ const InfraNuvem = () => {
                 </div>
             </div>
             <form onSubmit={handleSubmit(salvarInfra)}>
-                {/*  <div className="row">
-                    <div className="col-md-4">
-                        <ItemForm
-                            label="Data"
-                            name="data"
-                            readOnly
-                            value={infra.data}
-                        />
-                    </div>
-                </div> */}
                 <div className="row">
                     <div className="col-md-12 order-md-1">
-                        {(loader) ?
-                            <Loader
-                                type="TailSpin"
-                                color="#00BFFF"
-                                height={100}
-                                width={100}
-                            /> :
+                        <Spin spinning={loader}>
                             <BootstrapTable
                                 keyField="_id"
                                 bootstrap4
@@ -167,7 +168,7 @@ const InfraNuvem = () => {
                                         }
                                 })}
                             />
-                        }
+                        </Spin>
                     </div>
                 </div>
                 <div className="row">

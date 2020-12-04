@@ -1,12 +1,14 @@
 import React from "react";
-
+import { Steps, notification } from 'antd'
 import CardForm from '../../CardForm'
 import ButtonStep from '../../ButtonStep'
 import ItemForm from "../../ItemForm";
 import Card from '../../Card'
+import { LoadingOutlined, SolutionOutlined, EyeOutlined, CalculatorOutlined, AlertOutlined } from '@ant-design/icons';
+
 
 const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, buttonNext }) => {
-    const { 
+    const {
         horasLider,
         reuniaoLider,
         apropriacaoTime,
@@ -18,16 +20,35 @@ const OutherEstimates = ({ setForm, formData, navigation, buttonPrevious, button
         posGoLive,
         treinamento,
         numeroDaOportunidade,
-        cliente
+        cliente,
+        descricaoDaOportunidade
     } = formData;
 
     const { previous, next } = navigation;
+
+    const { Step } = Steps
+
+    notification.config({
+        bottom: 50,
+        duration: 2
+    })
 
     return (
         <div className="form">
             <div className="row">
                 <div className="col-md-12 order-md-1">
-                    <CardForm titleCard={`Dados das Demais Estimativas - OPP: ${numeroDaOportunidade} - ${cliente}`}>
+                    <CardForm titleCard={`${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}>
+                        <div className="row">
+                            <div className="col-md-12 mb-5">
+                                <Steps>
+                                    <Step status="finish" title="Oportunidade" icon={<SolutionOutlined />} />
+                                    <Step status="finish" title="Estimativa principal" icon={<CalculatorOutlined />} />
+                                    <Step status="process" title="Outras estimativas" icon={<LoadingOutlined />} />
+                                    <Step status="wait" title="Manutenção" icon={<AlertOutlined />} />
+                                    <Step status="wait" title="Resumo" icon={<EyeOutlined />} />
+                                </Steps>
+                            </div>
+                        </div>
                         <form className="needs-validation">
                             <div className="row">
                                 <div className="col-md-6 mb-3">

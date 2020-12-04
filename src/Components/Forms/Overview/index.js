@@ -1,6 +1,6 @@
 import React from "react";
 import { PDFViewer } from '@react-pdf/renderer'
-
+import { Steps, notification } from 'antd'
 import TableResume from '../../TableResume'
 import CardForm from '../../CardForm'
 import Card from '../../Card'
@@ -8,11 +8,12 @@ import ItemForm from '../../ItemForm'
 import { calculaTotalManutencao, calculaColuna } from '../../../Utils/metodos'
 import { useHistory, Link } from 'react-router-dom'
 import api from '../../../Utils/api'
-
+import { LoadingOutlined, SolutionOutlined, AppstoreAddOutlined, CalculatorOutlined, AlertOutlined } from '@ant-design/icons';
 
 const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
     const {
         numeroDaOportunidade,
+        descricaoDaOportunidade,
         cliente,
         dados,
         dadosResumo,
@@ -35,19 +36,26 @@ const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
 
     const history = useHistory()
 
+    const { Step } = Steps
+
+    notification.config({
+        bottom: 50,
+        duration: 2
+    })
+
     const totalManutenção = calculaTotalManutencao(dados, calculaColuna, valorHora, 0.01)
-    
-    function salvar(estimativa){
+
+    function salvar(estimativa) {
         api.post('estimativas', estimativa)
             .then(response => {
                 history.push("/estimativas")
             })
-            .catch(error =>{
+            .catch(error => {
                 console.log("Deu ruim!")
             })
     }
 
-    function submeterEstimativa(e){
+    function submeterEstimativa(e) {
         const dados = formData
         salvar(dados)
         e.preventDefault()
@@ -57,7 +65,18 @@ const Overview = ({ setForm, formData, navigation, buttonPrevious }) => {
         <div className="form">
             <div className="row">
                 <div className="col-md-12 order-md-1">
-                    <CardForm titleCard={`Resumo da estimativa - OPP: ${numeroDaOportunidade} - ${cliente}`}>
+                    <CardForm titleCard={`${numeroDaOportunidade} - ${cliente} - ${descricaoDaOportunidade}`}>
+                        <div className="row">
+                            <div className="col-md-12 mb-5">
+                                <Steps>
+                                    <Step status="finish" title="Oportunidade" icon={<SolutionOutlined />} />
+                                    <Step status="finish" title="Estimativa principal" icon={<CalculatorOutlined />} />
+                                    <Step status="finish" title="Outras estimativas" icon={<AppstoreAddOutlined />} />
+                                    <Step status="finish" title="Manutenção" icon={<AlertOutlined />} />
+                                    <Step status="process" title="Resumo" icon={<LoadingOutlined />} />
+                                </Steps>
+                            </div>
+                        </div>
                         <form className="needs-validation" onSubmit={submeterEstimativa}>
                             <div className="row">
                                 <div className="col-md-6 mb-3">

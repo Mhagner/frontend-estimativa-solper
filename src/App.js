@@ -1,6 +1,7 @@
 import React from 'react'
 import './dashboard.scss'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import 'antd/dist/antd.css'
 
 import Routes from './routes'
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Spin } from 'antd'
 import Main from '../../Components/Main'
 import BootstrapTable from 'react-bootstrap-table-next';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter'
@@ -23,7 +24,7 @@ const Clientes = () => {
 
     function getClientes() {
         setLoader(true)
-        api.get('clientes')
+        api.get('clientes/?sort=descricao')
             .then(response => {
                 //console.log(response.data)
                 setClientes(response.data)
@@ -82,7 +83,14 @@ const Clientes = () => {
                 return { width: "20%" };
             }
         },
-
+        {
+            dataField: 'tipo',
+            text: 'Tipo',
+            filter: textFilter(),
+            headerStyle: () => {
+                return { width: "20%" };
+            }
+        },
         {
             isDummyField: false,
             formatter: actionFormaterDetails,
@@ -105,15 +113,15 @@ const Clientes = () => {
                 </div>
             </div>
             <div className="row">
-                    <ButtonIcon
-                        size={`2 mb-3`}
-                        route={'/parametrizacoes/novo-cliente'}
-                        color="success">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                        </svg>
-                    </ButtonIcon>
-                   {/*  <button
+                <ButtonIcon
+                    size={`2 mb-3`}
+                    route={'/parametrizacoes/novo-cliente'}
+                    color="success">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                    </svg>
+                </ButtonIcon>
+                {/*  <button
                         type="button"
                         onClick={(id) => history.push("/parametrizacoes/novo-cliente")}
                         className="btn btn-success">
@@ -122,13 +130,7 @@ const Clientes = () => {
             </div>
             <div className="row">
                 <div className="col-md-6 order-md-1">
-                    {(loader) ?
-                        <Loader
-                            type="TailSpin"
-                            color="#00BFFF"
-                            height={100}
-                            width={100}
-                        /> :
+                    <Spin spinning={loader}>
                         <BootstrapTable
                             keyField="_id"
                             bootstrap4
@@ -141,7 +143,7 @@ const Clientes = () => {
                             striped
                             hover
                         />
-                    }
+                    </Spin>
                 </div>
             </div>
             <hr className="featurette-divider" />
