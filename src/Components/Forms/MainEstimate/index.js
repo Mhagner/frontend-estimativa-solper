@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Steps, notification } from 'antd'
+import { Steps, notification, Button, Tooltip } from 'antd'
 import { useHistory } from 'react-router-dom'
 import BootstrapTable from 'react-bootstrap-table-next'
 import cellEditFactory from 'react-bootstrap-table2-editor'
@@ -10,7 +10,18 @@ import ButtonStep from '../../ButtonStep'
 import Card from '../../Card'
 import { options } from '../../TableEdite/data'
 import './style.css'
-import { LoadingOutlined, SolutionOutlined, EyeOutlined, AppstoreAddOutlined, AlertOutlined } from '@ant-design/icons';
+import api from '../../../Utils/api'
+import {
+    DeleteOutlined,
+    ArrowRightOutlined,
+    ArrowLeftOutlined,
+    PlusOutlined,
+    LoadingOutlined,
+    SolutionOutlined,
+    EyeOutlined,
+    AppstoreAddOutlined,
+    AlertOutlined
+} from '@ant-design/icons';
 
 
 const widthCard = '18rem'
@@ -26,14 +37,19 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         dados
     } = formData;
 
+    const id = '5fc6cfdc25a214525c61cf81'
+
     //console.log(dados)
 
     const [sumRequisito, setSumRequisito] = useState(requisito)
     const [sumDesenvolvimento, setSumDesenvolvimento] = useState(0)
     const [sumTestes, setSumTestes] = useState(0)
     const [hoverIdx, setHoverIdx] = useState(null)
+    const [retrabalho, setRetrabalho] = useState('')
+    const [loader, setLoader] = useState(false)
 
     const { previous, next } = navigation;
+
     const { Step } = Steps
 
     let history = useHistory();
@@ -45,7 +61,29 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
 
     useEffect(() => {
         resumaHoras(dados)
-    })
+        getRetrabalho()
+    }, [])
+
+    function resumaHoras(dados) {
+        setSumRequisito(load(dados, 'requisito'))
+        setSumDesenvolvimento(load(dados, 'desenvolvimento'))
+        setSumTestes(load(dados, 'testes'))
+    }
+
+    const getRetrabalho = () => {
+        api.get(`parametrizacao-estimativa/${id}`)
+            .then(response => {
+                const dados = response.data
+                const retorno = {
+                    percentualRetrabalhoRequisito: dados.percentualRetrabalhoRequisito,
+                    percentualRetrabalhoDesenvolvimento: dados.percentualRetrabalhoDesenvolvimento,
+                    percentualRetrabalhoTestes: dados.percentualRetrabalhoTestes,
+                    percentualGP: dados.percentualGP,
+                    percentualGPLider: dados.percentualGPLider
+                }
+                setRetrabalho(retorno)
+            })
+    }
 
     const rowEvents = {
         onMouseEnter: (e, row, rowIndex) => {
@@ -56,14 +94,23 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         }
     }
 
+    /*Botão de ação da grid para deletar a linha
+    Só é mostrando quando o mouse estiver sobre a linha
+    */
+
     const actionFormater = (cell, row, rowIndex, { hoverIdx }) => {
         if ((hoverIdx !== null || hoverIdx !== undefined) && hoverIdx === rowIndex) {
             return (
-                <button className='btn btn-default btn-custom'
-                    onClick={() => deleteRow(rowIndex)}>
-                    <i className='fa fa-trash-o btn-icon'></i>
-                </button>
-                //<i class="fa fa-trash" onClick={() => deleteRow(rowIndex)}></i>
+                <Button
+                    type="danger"
+                    onClick={() => deleteRow(rowIndex)}
+                    shape="circle"
+                    icon={<DeleteOutlined />} />
+                /*   <button className='btn btn-default btn-custom'
+                      onClick={() => deleteRow(rowIndex)}>
+                      <i className='fa fa-trash-o btn-icon'></i>
+                  </button> */
+
             );
         }
         return (
@@ -84,26 +131,14 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
     function calculeHoras(dados, row) {
         resumaHoras(dados)
         row.total = calculaTotal(row)
-        row.testes = calculaTestes(row)
-        row.sumRequisito = row.requisito + (row.requisito * percentRetrabalho)
-        row.sumDesenvolvimento = row.desenvolvimento + (row.desenvolvimento * percentRetrabalho)
-        row.sumTestes = row.testes + (row.testes * percentRetrabalho)
-    }
-
-    function resumaHoras(dados) {
-        setSumRequisito(load(dados, 'requisito'))
-        setSumDesenvolvimento(load(dados, 'desenvolvimento'))
-        setSumTestes(load(dados, 'testes'))
-    }
-
-    function calculaTestes(dados) {
-        let sumTeste = dados.desenvolvimento / 2
-        return sumTeste
+        //row.testes = calculaTestes(row)
+        row.sumRequisito = row.requisito + (row.requisito * (retrabalho.percentualRetrabalhoRequisito / 100))
+        row.sumDesenvolvimento = row.desenvolvimento + (row.desenvolvimento * (retrabalho.percentualRetrabalhoDesenvolvimento / 100))
+        row.sumTestes = row.testes + (row.testes * (retrabalho.percentualRetrabalhoTestes / 100))
     }
 
     function calculaTotal(dados) {
-        let teste = calculaTestes(dados)
-        let sumDado = dados.requisito + dados.desenvolvimento + teste
+        let sumDado = dados.requisito + dados.desenvolvimento + dados.testes
         return sumDado
     }
 
@@ -135,15 +170,14 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
                     description: "É necessário adicionar ao menos um item!"
                 })
             )
+        } else {
+            next()
         }
-        next()
     }
 
-    const percentRetrabalho = 0.10
-
-    let retRequisito = sumRequisito * percentRetrabalho
-    let retDesenvolvimento = sumDesenvolvimento * percentRetrabalho
-    let retTestes = sumTestes * percentRetrabalho
+    let retRequisito = sumRequisito * (retrabalho.percentualRetrabalhoRequisito / 100)
+    let retDesenvolvimento = sumDesenvolvimento * (retrabalho.percentualRetrabalhoDesenvolvimento / 100)
+    let retTestes = sumTestes * (retrabalho.percentualRetrabalhoTestes / 100)
     let total = sumRequisito + sumDesenvolvimento + sumTestes + retRequisito + retDesenvolvimento + retTestes
 
     const columns = [{
@@ -161,7 +195,8 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         headerStyle: () => {
             return { width: "6%" };
         },
-        align: "center"
+        align: "center",
+        footer: ""
     }, {
         dataField: 'descricao',
         text: 'DESCRIÇÃO DO ITEM',
@@ -170,7 +205,8 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         },
         headerStyle: () => {
             return { width: "30%" };
-        }
+        },
+        footer: ""
     },
     {
         dataField: 'tipo',
@@ -198,7 +234,8 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         },
         headerStyle: () => {
             return { width: "20%" };
-        }
+        },
+        footer: ""
     }, {
         dataField: 'requisito',
         text: 'REQUISITO',
@@ -206,7 +243,10 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
             return { width: "10%" };
         },
         align: "center",
-        type: 'number'
+        type: 'number',
+        footer: sum => sum.reduce((acc, item) => acc + item, 0),
+        footerAlign: "center",
+        footerClasses: "row-color"
     }, {
         dataField: 'desenvolvimento',
         text: 'DESENV.',
@@ -214,16 +254,22 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
             return { width: "10%" };
         },
         align: "center",
-        type: 'number'
+        type: 'number',
+        footer: sum => sum.reduce((acc, item) => acc + item, 0),
+        footerAlign: "center",
+        footerClasses: "row-color"
     }, {
         dataField: 'testes',
         text: 'TESTES',
-        editable: false,
+        //editable: false,
         headerStyle: () => {
             return { width: "10%" };
         },
         align: "center",
-        type: 'number'
+        type: 'number',
+        footer: sum => sum.reduce((acc, item) => acc + item, 0),
+        footerAlign: "center",
+        footerClasses: "row-color"
     }, {
         dataField: 'total',
         text: 'TOTAL',
@@ -232,7 +278,10 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
             return { width: "10%" };
         },
         align: "center",
-        type: 'number'
+        type: 'number',
+        footer: sum => sum.reduce((acc, item) => acc + item, 0),
+        footerAlign: "center",
+        footerClasses: "row-color-total"
     }, {
         //Ação excluir linha
         text: "AÇÃO",
@@ -275,7 +324,8 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
         align: "center",
         type: 'number',
         hidden: true
-    },];
+    },
+    ];
 
 
     return (
@@ -296,7 +346,13 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
                         </div>
                         <hr className="featurette-divider" />
                         <div className="btn-group mb-3">
-                            <button className="btn btn-primary" onClick={() => addNewRow()}>Novo item</button>
+                            <Button
+                                type="primary"
+                                icon={<PlusOutlined />}
+                                shape="round"
+                                onClick={() => addNewRow()}>
+                                Novo Item
+                            </Button>
                         </div>
                         <div className="col-md-12 mb-3">
                             <BootstrapTable
@@ -318,66 +374,39 @@ const MainEstimate = ({ setForm, formData, navigation, buttonPrevious, buttonNex
                                 })}
                             />
                         </div>
-                        <div className="row">
+                        {/* <div className="row">
                             <div className="col-md-3 mb-3">
                                 <Card
-                                    title="Requisito"
-                                    description={sumRequisito}
-                                />
-                            </div>
-                            <div className="col-md-3 mb-3">
-                                <Card
-                                    title="Desenvolvimento"
-                                    description={sumDesenvolvimento}
-                                />
-                            </div>
-                            <div className="col-md-3 mb-3">
-                                <Card
-                                    title="Testes"
-                                    description={sumTestes}
-                                />
-                            </div>
-                            <div className="col-md-3 mb-3">
-                                <Card
-                                    title="Total"
+                                    title="Total + retrabalho"
                                     color="primary"
                                     description={total.toFixed(2)}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                         <div className="row">
-                            <div className="col-md-3 mb-3">
-                                <Card
-                                    title="Retrabalho REQ."
-                                    color="warning"
-                                    description={retRequisito.toFixed(2)}
-                                />
+                            <div className="col-md-2 mb-3">
+                                <Tooltip title="Voltar">
+                                    <Button
+                                        type="primary"
+                                        icon={<ArrowLeftOutlined />}
+                                        size="large"
+                                        onClick={previous}
+                                    >
+                                    </Button>
+                                </Tooltip>
                             </div>
-                            <div className="col-md-3 mb-3">
-                                <Card
-                                    title="Retrabalho DES."
-                                    color="warning"
-                                    description={retDesenvolvimento.toFixed(2)}
-                                />
+                            <div className="col-md-2 mb-3">
+                                <Tooltip title="Próximo">
+                                    <Button
+                                        className="red-1"
+                                        type="primary"
+                                        size="large"
+                                        icon={<ArrowRightOutlined />}
+                                        onClick={() => validaPreenchimento()}
+                                    >
+                                    </Button>
+                                </Tooltip>
                             </div>
-                            <div className="col-md-3 mb-3">
-                                <Card
-                                    title="Retrabalho Teste"
-                                    color="warning"
-                                    description={retTestes.toFixed(2)}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <ButtonStep
-                                colorPrevious={buttonPrevious}
-                                colorNext={buttonNext}
-                                funcPrevious={previous}
-                                funcNext={() => validaPreenchimento()}
-                                buttonPrevious="Voltar"
-                                buttonNext="Próximo"
-                            />
                         </div>
                     </CardForm>
                 </div>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { notification, Steps } from 'antd'
+import { notification, Steps, Button, Tooltip } from 'antd'
 import ItemForm from "../../ItemForm";
 import Combobox from "../../Combobox"
 import CardForm from '../../CardForm'
 //import { clientes } from '../../../Utils/mocks/mockClientes'
 import api from '../../../Utils/api'
 import ButtonIcon from '../../ButtonIcon'
-import { CalculatorOutlined, LoadingOutlined, EyeOutlined, AppstoreAddOutlined, AlertOutlined } from '@ant-design/icons';
+import {ArrowRightOutlined, CalculatorOutlined, LoadingOutlined, EyeOutlined, AppstoreAddOutlined, AlertOutlined } from '@ant-design/icons';
 
 
 const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
@@ -37,7 +37,6 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
     }, [])
 
     function validaPreenchimento(e) {
-        e.preventDefault()
         if (responsavelEscopo === "" ||
             responsavelEstimativa === "" ||
             numeroDaOportunidade === "" ||
@@ -135,14 +134,25 @@ const EscopeInformation = ({ setForm, formData, navigation, buttonNext }) => {
                                 </div>
                             </div>
                             <div className="row">
-                                <ButtonIcon
+                                <div className="col-md-4 mb-3">
+                                    <Tooltip title="Próximo">
+                                        <Button
+                                            type="primary"
+                                            icon={<ArrowRightOutlined />}
+                                            size="large"
+                                            onClick={() => validaPreenchimento()}
+                                        >
+                                        </Button>
+                                    </Tooltip>
+                                </div>
+                                {/*  <ButtonIcon
                                     size={2}
                                     handlerClick={validaPreenchimento}
                                     color="success">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
                                     </svg>
-                                </ButtonIcon>
+                                </ButtonIcon> */}
                             </div>
                         </form>
                     </CardForm>

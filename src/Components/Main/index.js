@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import { Auth } from 'aws-amplify'
 import SideBar from '../SideBar'
 import NavItem from '../NavItem'
 import DivSidebar from '../DivSidebar'
 import * as S from './styled'
 
 function Main(props) {
+    
+    function signOut() {
+        Auth.signOut({ global: true })
+    }
     return (
         <>
             <div className='row'>
@@ -32,7 +36,7 @@ function Main(props) {
                             path_2="M3 6h18"
                             path_3="M3 18h18"
                         />
-                     {/*    <NavItem
+                        {/*    <NavItem
                             description="Novo Escopo"
                             url="/escopo-office-online"
                             target
@@ -40,19 +44,19 @@ function Main(props) {
                             path_2="M14 2v6h6"
                         /> */}
                         <DivSidebar description="Cadastros Basicos" />
-                       {/*  <NavItem
+                        {/*  <NavItem
                             description="Tipos de Solução"
                             url="/tipos-solucao"
                             path_1="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
                             path_2="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1l1-4l9.5-9.5z"
                         /> */}
-                        <NavItem
+                        {/* <NavItem
                             description="Base de Conhecimento"
                             url="/base-conhecimento"
                             path_1="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"
                             path_2="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"
                             elipse
-                        />
+                        /> */}
                         <NavItem
                             description="Parametrizacoes"
                             url="/parametrizacoes"
@@ -60,7 +64,7 @@ function Main(props) {
                             circle
                         />
                         <DivSidebar description="OUTROS" />
-                       {/*  <NavItem
+                        {/*  <NavItem
                             description="Usuários"
                             url="/escopo-office-online"
                             path_1="M23 21v-2a4 4 0 0 0-3-3.87"
@@ -70,6 +74,7 @@ function Main(props) {
                         /> */}
                         <NavItem
                             description="Sair"
+                            handlerClick={signOut}
                             url="/"
                             path_1="M18.36 6.64a9 9 0 1 1-12.73 0"
                             path_2="M12 2v10"

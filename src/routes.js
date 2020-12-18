@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
 import Home from './Pages/Home'
@@ -19,6 +19,12 @@ import EstimativaDetalhe from './Pages/EstimativaDetalhe'
 import EstimativaDetalheImpressao from './Pages/EstimativaDetalheImpressao'
 
 function Routes() {
+  const [user, setUser] = useState()
+
+  useEffect(() => {
+    setUser(localStorage.getItem("CognitoIdentityServiceProvider.40kad5tj6r23u1feqtdiv1qi50.LastAuthUser"))
+  }, [])
+
   return (
     <BrowserRouter>
       <Switch>
@@ -31,6 +37,7 @@ function Routes() {
           window.location.href = 'https://www.office.com/launch/word?auth=2'
           return null
         }} />
+
         <Route exact path="/parametrizacoes" component={Parametrizacoes} />
         <Route exact path="/parametrizacoes/usuarios" component={Usuarios} />
         <Route exact path="/parametrizacoes/estimativa" component={ConfiguracaoEstimativa} />
@@ -39,6 +46,8 @@ function Routes() {
         <Route exact path="/parametrizacoes/novo-cliente" component={NovoCliente} />
         <Route exact path="/parametrizacoes/clientes/alterar-cliente/:id" component={AlterarCliente} />
         <Route exact path="/parametrizacoes/infra-nuvem" component={InfraNuvem} />
+
+
         <Route exact path="/estimativas/:id" component={EstimativaDetalhe} />
         <Route exact path="/estimativas/impressao/:id" component={EstimativaDetalheImpressao} />
         <Route exact path="/estimativas/alterar-estimativa/:id" component={AlterarEstimativa} />
